@@ -171,8 +171,6 @@ export default function MichaelisMentenEdge({
             </EdgeLabelRenderer>
 
 
-            
-            
         </>
 
     );
@@ -199,42 +197,12 @@ export function MichaelisMentenDrawerInfo({edgeID}: {edgeID: string;}) {
         <p> Catalyzing enzyme: {currentEnzymeID} </p>
         <p> RATE: V * a / K_m + a, where V is limiting rate, a is concentration of substrate, K_m is the Michaelis Constant.</p>
         <p> NOTE: We're making the assumption that enzyme concentration is much less than substrate concentration!</p>
-        <ParameterInput paramID={associated_params[0]} />
-        <ParameterInput paramID={associated_params[1]} />
 
         </>
     );
 }
 
-function ParameterInput({ paramID }: { paramID: string} ) {
 
-    console.log('searching for parameter: ' + paramID);
-    const paramVal = useStore((store) => store.simParams.find(p => p.id === paramID)?.val);
-    const paramDisp = useStore((store) => store.simParams.find(p => p.id === paramID)?.display);
-    
-    const updateParam = useStore((store) => store.updateParamValue)
-
-    const onParamUpdate = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log('trying to update param...')
-        updateParam(paramID, event.target.value);
-    }
-
-    return (
-        <>
-            <div class="species-params">
-                {paramDisp} : 
-                <input
-                    className="item species-param-input"
-                    placeholder={`0`}
-                    value={paramVal}
-                    onChange={onParamUpdate}
-                />
-            </div>
-
-
-        </>
-    );
-}
 
 export function initializeMichaelisEdge(id: string, currRxn: reaction) {
     // const current = get().reactions.find(item => item.id === id) || {sources: [], targets: []};

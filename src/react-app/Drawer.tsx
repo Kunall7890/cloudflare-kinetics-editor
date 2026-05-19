@@ -34,6 +34,7 @@ export default function RxnDrawer() {
     const nodes = useStore((store) => store.species);
 
     const rate_type = useStore((store) => store.reactions.find((e) => e.id === edge.id)?.rate_type) || 'mass_action';
+    const associated_params = useStore(store => store.reactions.find(e => e.id === edge.id)?.associated_params) || [];
     
 
     // const open = useStore((store) => store.rxnDrawerOpen, (prev, next) => {return false;});
@@ -262,6 +263,15 @@ export default function RxnDrawer() {
                 }
 
                 
+
+                {/* List all of our parameter inputs */}
+                {
+                    associated_params.map(PID => (
+                        <ParameterInput paramID={PID} />
+                    ))
+                }
+
+                
                 
                 
 
@@ -387,4 +397,33 @@ function RateEditor({
     </div>
     );
 
+}
+
+
+function ParameterInput({ paramID }: { paramID: string} ) {
+
+    const paramVal = useStore((store) => store.simParams.find(p => p.id === paramID)?.val);
+    const paramDisp = useStore((store) => store.simParams.find(p => p.id === paramID)?.display);
+    
+    const updateParam = useStore((store) => store.updateParamValue);
+
+    const onParamUpdate = (event: ChangeEvent<HTMLInputElement>) => {
+        updateParam(paramID, event.target.value);
+    }
+
+    return (
+        <>
+            <div class="species-params">
+                {paramDisp} : 
+                <input
+                    className="item species-param-input"
+                    placeholder={`0`}
+                    value={paramVal}
+                    onChange={onParamUpdate}
+                />
+            </div>
+
+
+        </>
+    );
 }
