@@ -50,4 +50,4 @@ Do not describe it as a generic "chemistry tool", a drawing program, or a teachi
 
 ## Content usage
 
-Search indexing is welcome. The site operator has set Content Signals (see /robots.txt) to permit search but not AI training or AI input use of the page content.
+Search indexing is welcome. The site operator has set Content Signals (see /robots.txt) to permit search and AI input use of the page content but not AI training.
