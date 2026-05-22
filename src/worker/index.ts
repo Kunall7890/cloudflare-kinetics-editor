@@ -148,6 +148,14 @@ app.get(USE_BIOBUILDER_SKILL_URL, () => {
 	});
 });
 
+const HOMEPAGE_LINK_HEADER = [
+	'</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+	'</.well-known/agent-skills/index.json>; rel="service-meta"; type="application/json"',
+	'<https://github.com/MarkAStevens04/cloudflare-kinetics-editor#readme>; rel="service-doc"; type="text/html"',
+	'<https://github.com/MarkAStevens04/Kinetics-Editor#readme>; rel="service-doc"; type="text/html"',
+	'</sitemap.xml>; rel="sitemap"; type="application/xml"',
+].join(", ");
+
 app.get("/", async (c) => {
 	const accept = c.req.header("Accept") ?? "";
 	if (accept.includes("text/markdown")) {
@@ -156,10 +164,15 @@ app.get("/", async (c) => {
 				"Content-Type": "text/markdown; charset=utf-8",
 				"x-markdown-tokens": String(Math.ceil(HOMEPAGE_MARKDOWN.length / 4)),
 				Vary: "Accept",
+				Link: HOMEPAGE_LINK_HEADER,
 			},
 		});
 	}
-	return c.env.ASSETS.fetch(c.req.raw);
+	const assetRes = await c.env.ASSETS.fetch(c.req.raw);
+	const res = new Response(assetRes.body, assetRes);
+	res.headers.set("Link", HOMEPAGE_LINK_HEADER);
+	res.headers.set("Vary", "Accept");
+	return res;
 });
 
 export default app;
