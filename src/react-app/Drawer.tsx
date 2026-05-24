@@ -22,8 +22,11 @@ import {
     CheckIcon,
     ChevronDownIcon,
     ChevronUpIcon,
+    InfoCircledIcon,
 
 } from "@radix-ui/react-icons";
+
+import { Tooltip } from 'radix-ui';
 
 
 
@@ -78,7 +81,7 @@ export default function RxnDrawer() {
         {
             'id': 'michaelis_menten',
             'label': 'Michaelis-Menten',
-            'desc': 'When you want to simulate an enzyme catalyzing some reaction.'
+            'desc': 'When you want to simulate an enzyme catalyzing some reaction. \n \n ASSUMPTIONS: Substrate is in excess, enzyme is very small.'
         },
         {
             'id': 'mass_action',
@@ -258,7 +261,7 @@ export default function RxnDrawer() {
                     </Select.Trigger>
 
                     <Select.Portal>
-                        <Select.Content className="SelectContent">
+                        <Select.Content className="SelectContent" position="popper" sideOffset={4}>
                             <Select.ScrollUpButton className="SelectScrollButton">
                                 <ChevronUpIcon />
                             </Select.ScrollUpButton>
@@ -267,13 +270,48 @@ export default function RxnDrawer() {
                                 <Select.Group>
                                     {/* <Select.Label className="SelectLabel">Reaction Type</Select.Label> */}
 
-                                    {reactionTypes.map((type) => (
+                                    {/* {reactionTypes.map((type) => (
                                         <Select.Item className="SelectItem" value={type.id}>
                                             <Select.ItemText> {type.label} </Select.ItemText>
                                             <Select.ItemIndicator className="SelectItemIndicator">
                                                 <CheckIcon />
                                             </Select.ItemIndicator>
+
+                                
                                         </Select.Item>
+                                    ))} */}
+
+                                    {reactionTypes.map((type) => (
+
+                                            <Select.Item className="SelectItem" value={type.id}>
+                                                            <Select.ItemText> {type.label} </Select.ItemText>
+                                                            <Select.ItemIndicator className="SelectItemIndicator">
+                                                                <CheckIcon />
+                                                            </Select.ItemIndicator>
+
+                                                            <Tooltip.Provider>
+                                                                <Tooltip.Root delayDuration={200}>
+                                                                    <Tooltip.Trigger asChild>
+                                                                        <button className="InfoIcon">
+                                                                            <InfoCircledIcon />
+                                                                        </button>
+                                                                    </Tooltip.Trigger>
+                                                                    
+                                                                    <Tooltip.Portal>
+                                                                        <Tooltip.Content className="TooltipContent" sideOffset={5}>
+                                                                            {type.desc}
+                                                                            <Tooltip.Arrow className="TooltipArrow" />
+                                                                        </Tooltip.Content>
+                                                                    </Tooltip.Portal>
+
+                                                                </Tooltip.Root>
+                                                            </Tooltip.Provider>
+                                            </Select.Item>
+                                        
+
+                                            
+                                
+                                        
                                     ))}
                                     
                                 </Select.Group>
@@ -286,6 +324,10 @@ export default function RxnDrawer() {
 
                     </Select.Portal>
                 </Select.Root>
+
+
+
+
 
 
 
