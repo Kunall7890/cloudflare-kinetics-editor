@@ -223,6 +223,7 @@ button:focus-visible {
 	margin: 5px 0px;
 	padding: 0px 3px;
 	color: rgba(0, 0, 0, 0.5);
+	cursor: default;
 
 }
 

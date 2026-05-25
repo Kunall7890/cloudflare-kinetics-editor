@@ -285,7 +285,7 @@ export default function RxnDrawer() {
                                                         </Tooltip.Trigger>
                                                         
                                                         <Tooltip.Portal>
-                                                            <Tooltip.Content className="TooltipContent" sideOffset={5}>
+                                                            <Tooltip.Content className="TooltipContent" sideOffset={5} side="right">
                                                                 {type.desc}
                                                                 <Tooltip.Arrow className="TooltipArrow" />
                                                             </Tooltip.Content>
@@ -334,11 +334,14 @@ export default function RxnDrawer() {
                 
 
                 {/* List all of our parameter inputs */}
-                {
-                    associated_params.map(PID => (
-                        <ParameterInput paramID={PID} />
-                    ))
-                }
+                <div >
+                    <p className="DrawerSection">Tunable Parameters: </p>
+                    {
+                        associated_params.map(PID => (
+                            <ParameterInput paramID={PID} />
+                        ))
+                    }
+                </div>
 
                 
                 
@@ -429,7 +432,7 @@ function RateEditor({
             </math-field>
 
 
-        <p className='drawer-text' style={{fontSize: '0.8em', margin: '10px 0px',}}>Add species to rate law</p>
+        <p className='DrawerSection'>Add species to rate law:</p>
 
         {/* Add Reactant Handles */}
         <div className="species-param-input" 
@@ -481,13 +484,16 @@ function ParameterInput({ paramID }: { paramID: string} ) {
 
     return (
         <>
-            <div className="species-params">
-                {paramDisp} : 
+            <div className="DrawerSection">
+                {paramDisp} 
                 <input
                     className="item species-param-input"
                     placeholder={`0`}
                     value={paramVal}
                     onChange={onParamUpdate}
+                    style={{
+                        minWidth: '80%',
+                    }}
                 />
             </div>
 
