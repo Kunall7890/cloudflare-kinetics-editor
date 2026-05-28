@@ -47,6 +47,11 @@ type rateEditorProps = {
     onRateChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
+type reactantEditorProps = {
+    sourceIDs: string[];
+    targetIDs: string[];
+}
+
 
 export default function RxnDrawer() {
 
@@ -247,7 +252,7 @@ export default function RxnDrawer() {
 
                 <hr />
 
-                <ReactantEditor rxnID={RxnID} />
+                <ReactantEditor sourceIDs={edge.sources} targetIDs={edge.targets} />
 
 
                 <hr />
@@ -371,32 +376,67 @@ export default function RxnDrawer() {
 
 }
 
-function ReactantEditor(
-    rxnID
-) {
-    const reactantIDs = useStore((store) => store.reactions.find((r) => r.id === rxnID)?.sources) || [''];
-    const productIDs = useStore((store) => store.reactions.find((r) => r.id === rxnID)?.targets) || [''];
+function ReactantEditor({
+    sourceIDs,
+    targetIDs,
+}: reactantEditorProps) {
+
+    const reactants = useStore((store) => store.species).filter(r => sourceIDs.includes(r.id)); 
+    const products = useStore((store) => store.species).filter(r => targetIDs.includes(r.id));
+
+    if (! sourceIDs || !targetIDs || sourceIDs.length === 0 || targetIDs.length === 0) {
+        return null;
+    }
+
+    console.log('reactant IDs: ' + JSON.stringify(reactants));
+
 
     return (
+    <>
+    <p> Edit Coefficients </p>
     <div className="DrawerRow">
+        
+
         <div className="DrawerHalf" >
             <p> Reactants: </p>
-            <p> test </p>
 
+            {reactants.map((reactant) => (
+                <div style={{display: 'flex', padding: '5px 0px'}}>
+                <input
+                    className="item species-param-input"
+                    placeholder={`0`}
+                    value={'2'}
+                    // onChange={onParamUpdate}
+                    style={{
+                        minWidth: '10px',
+                        margin: '0px 0px'
+                    }}
+                />
+
+                <p className='autofill-species-box' 
+                key={reactant.id} 
+                style={{backgroundColor: reactant.color}}
+                // onClick={() => onButton(reactant.id)}
+                >
+
+                    {reactant.label}
+
+                </p>
+                </div>))
+            }
             
             
 
         </div>
 
         <Separator.Root
-                        className="SeparatorRoot"
-                        decorative
-                        orientation="vertical"
-                        style={{ 
-                            margin: "0 0px",
-                            
-                         }}
-                    />
+            className="SeparatorRoot"
+            decorative
+            orientation="vertical"
+            style={{ 
+                margin: "0 0px",
+                }}
+        />
         
 
 
@@ -404,6 +444,7 @@ function ReactantEditor(
             <p> Products: </p>
         </div>
     </div>
+    </>
     );
 
 
