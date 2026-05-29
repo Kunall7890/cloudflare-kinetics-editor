@@ -343,6 +343,8 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
     - Like 2X + Y -> Z
     - Little button at bottom that lets you add reactants / products straight from drawer
 
+- Internal representation of reactants & products
+
 
 # React + Vite + Hono + Cloudflare Workers
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/vite-react-template)
