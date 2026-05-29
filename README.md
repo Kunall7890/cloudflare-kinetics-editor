@@ -344,9 +344,13 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
     - Little button at bottom that lets you add reactants / products straight from drawer
 
 - Internal representation of reactants & products
+    - Fix MichaelisMenten Representation & finding enzyme
+    - Package simulation 
 
 - Global vs local parameters?
     - Similar to adding species, add parameters!
+
+- Fix coefficients not working when DOING simulation!
 
 
 # React + Vite + Hono + Cloudflare Workers

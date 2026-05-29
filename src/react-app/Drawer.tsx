@@ -401,7 +401,7 @@ function ReactantEditor({
 
     return (
     <>
-    <p> Edit Coefficients </p>
+    <p className="DrawerSection"> Edit Coefficients: </p>
     <div className="DrawerRow">
         
 
@@ -418,7 +418,7 @@ function ReactantEditor({
                     style={{
                         minWidth: '10px',
                         margin: '0px 0px',
-                        padding: '0px 0.8em 0px 0.2em',
+                        padding: '0px 1em 0px 0.2em',
                     }}
                 />
 
@@ -458,17 +458,18 @@ function ReactantEditor({
                 <input
                     className="item species-param-input"
                     placeholder={`0`}
-                    value={(getCoefficient(product.id, rxnID)).toString()}
+                    value={getCoefficient(product.id, rxnID) === 0 ? '' : getCoefficient(product.id, rxnID).toString()}
                     onChange={(e) => updateCoefficient(product.id, parseInt(e.target.value) || 0)}
                     style={{
-                        // minWidth: '10px',
-                        margin: '0px 0px'
+                        minWidth: '10px',
+                        margin: '0px 0px',
+                        padding: '0px 1em 0px 0.2em',
                     }}
                 />
 
                 <p className='autofill-species-box' 
                 key={product.id} 
-                style={{backgroundColor: product.color, borderColor: product.color, cursor: 'default', transform: 'translateX(-15px)'}}
+                style={{backgroundColor: product.color, borderColor: product.color, cursor: 'default', transform: 'translateX(-1em)'}}
                 // onClick={() => onButton(product.id)}
                 >
 

@@ -84,7 +84,7 @@ function SimulationDrawer() {
             onClick={handleClick}
         >
 
-            <button onClick={handleSimulate} className="simulate-button" >SIMULATE</button>
+            <button onClick={handleSimulate} className="simulate-button" >{simStatus === 0 ? 'SIMULATE' : simStatus === 1 ? 'SIMULATING...' : 'SIMULATE'}</button>
         
             <br />
             <br />

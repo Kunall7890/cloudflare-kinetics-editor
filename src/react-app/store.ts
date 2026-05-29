@@ -558,10 +558,10 @@ const useStore = create<AppState>((set, get) => ({
         const payload = {
           "Species": get().species.map(({ id, initial}) => ({'id': id, 'initial': Number(initial)})),
 
-          "Reactions": get().reactions.map(({ id, sources, targets, rate_law, associated_params, enzymeID}) => ({
+          "Reactions": get().reactions.map(({ id, rate_law, associated_params, participants}) => ({
               'id': id, 
-              'Reactants': sources.filter(id => id !== enzymeID), // POSSIBLE ERROR!! What if we WANT the enzyme to be included! Should have more fine-tunable reactants that change depending on reaction type.
-              'Products': targets, 
+              'Reactants': participants.filter(p => p.role === 'reactant').flatMap(({ id, coefficient }) => Array(coefficient).fill(id)), // Repeat the reactant id according to its coefficient. So A with coeff 2 becomes [A, A]
+              'Products': participants.filter(p => p.role === 'product').flatMap(({ id, coefficient }) => Array(coefficient).fill(id)), // Repeat the product id according to its coefficient. So A with coeff 2 becomes [A, A]
               'rate_law': cleanAsciiConversion(convertLatexToAsciiMath(rate_law || '')), 
 
               // Lowkey this is bad code. Instead of putting parameters with the reactions, we should have parameters be their own object. Requires refactoring simulation engine.
@@ -731,7 +731,13 @@ function predictRxnType(reaction: reactions, species: species[]) {
 // Gets the default rate law for a given rate law type!
 function getDefaultRateLaw(reaction: reactions) {
   // Default is mass_action (reactant1 * reactant2 * ... * 0.1)
-  const newRateLaw = reaction.participants.filter((p) => p.role === 'reactant').map((s) => {return '(\\obj' + s.id + '{\\text{' + s.id + '}})\\cdot'}).join('') + '0.1';
+  const terms = reaction.participants.filter((p) => p.role === 'reactant').map((s) => {
+    const base = `(\\obj${s.id}{\\text{${s.id}}})`;
+    return s.coefficient === 1 ? base : `${base}^{${s.coefficient}}`;
+  });
+
+  const newRateLaw = [...terms, '0.1'].join(' \\cdot ');
+
   return newRateLaw
 }
 
