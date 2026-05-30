@@ -252,9 +252,12 @@ export function initializeMichaelisEdge(id: string, currRxn: reaction) {
         return { ...p, id: currentEnzymeID, role: 'catalyst' };
     });
 
+    // Remove duplicate IDs from associated_params!
+    const newParameters = [...currRxn.associated_params, kmID, vmaxID];
+
 
     console.log('new participants: ' + JSON.stringify(newParticipants, null, 2));
 
-    return { ...currRxn, rate_type: 'michaelis_menten', participants: newParticipants, rate_law: newRateLaw, associated_params: [...currRxn.associated_params, kmID, vmaxID] };
+    return { ...currRxn, rate_type: 'michaelis_menten', participants: newParticipants, rate_law: newRateLaw, associated_params: [...new Set(newParameters)] };
 
 };

@@ -566,7 +566,7 @@ function RateEditor({
 
         <p className='DrawerSection'>Add species to rate law:</p>
 
-        {/* Add Reactant Handles */}
+        {/* Add Reactant Chips */}
         <div className="species-param-input" 
         style={{
                 backgroundColor: 'rgba(255, 255, 255, 1)',
@@ -581,7 +581,7 @@ function RateEditor({
             }}
         >
 
-            {/* Populate our rate law buttons */}
+            {/* Populate our rate law chips */}
             {nodes.map((node) => (
                 <div>
                 <p className='autofill-species-box' 
@@ -591,6 +591,41 @@ function RateEditor({
                 >
 
                     {node.label}
+
+                </p>
+                </div>))
+            }
+        </div>
+
+
+
+         <p className='DrawerSection'>Add parameter to rate law:</p>
+
+        {/* Add Parameter Chips */}
+        <div className="species-param-input" 
+        style={{
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                color: 'rgba(0, 0, 0, 0.8)',
+                width: '95%',
+                margin: '0px 0px',
+                minWidth: '0px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                padding: '5px 5px',
+                gap: '5px',
+            }}
+        >
+
+            {/* Populate our parameter chips */}
+            {params.map((param) => (
+                <div>
+                <p className='autofill-species-box' 
+                key={param.id} 
+                style={{backgroundColor: 'rgba(0, 0, 0, 0.1)'}}
+                onClick={() => onButton(param.id)}
+                >
+
+                    {param.display}
 
                 </p>
                 </div>))

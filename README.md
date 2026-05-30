@@ -363,15 +363,31 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 
 - Way better tool
 
+- Better reactant editor
+    - Little animation on open / close
+    - Little Drawer opens up to edit the node! Searchable on Uniprot.
+
+- Better parameter editor
+    - Right clicking "tunable parameters" lets you "de-associate" a parameter from the reaction.
+    - You can see a list of parameters, and to the right, see all associated reactions. You can scroll to the left and right to see lits of chips of all associated rxns.
+    - Refactor parameters to be global / local
+        - "Tunable Parameters" is just a list of parameters curretnly in rate law. Possibly make value draggable?
+        - You can add existing parameters from a list, or create new parameters also from that list! 
+
+- Everything in Drawer is a collapsible item. That way it's less overwhelming.
+
+- Add "catalysts" underneath "edit coefficients"
+
 ### TODO
-- Right click to edit color / initial values
 - Add parameters with buttons.
     - Create new parameters
     - Edit parameter values (global)
-    - Refactor parameters to be global / local
+- Clean up "Customize Rate Law" (remove hamburger and keyboard buttons)
+    
 - Better tooltips everywhere!
 - Multi-reactant arrows!
     - Show multiple inputs / outputs
+- Make video tutorial
 
 
 # React + Vite + Hono + Cloudflare Workers
