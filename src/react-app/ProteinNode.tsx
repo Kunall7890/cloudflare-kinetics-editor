@@ -2,8 +2,13 @@
 import { Handle, Position, type Node, type NodeProps } from '@xyflow/react';
 import { ChangeEvent } from 'react';
 import './index.css';
-import './nodeStyles.css'
+import './styles/nodeStyles.css'
+import './radix.css';
 import useStore from './store';
+
+import { 
+    Popover, // Dropdown to edit node properties
+ } from 'radix-ui';
 
 type ProteinNodeType = Node<{ 
     label: string; 
@@ -20,11 +25,17 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
 
 
     const updateLabel = useStore((store) => store.updateSpeciesLabel);
+    const updateInitialConcentration = useStore((store) => store.updateInitialConcentration);
+
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         // data.onLabelChange(id, event.target.value);
         updateLabel(id, event.target.value);
 
+    }
+
+    const onInitChange = (event: ChangeEvent<HTMLInputElement>) => {
+        updateInitialConcentration(id, event.target.value);
     }
 
     const borderColorOp = selected ? '#747bff' : "#ccc";
@@ -40,7 +51,11 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
 
     return (
 
-    <div className="custom-node" style={{
+    
+    <Popover.Root>
+        {/* Popover is what lets us right click and have a custom dropdown */}
+    <Popover.Trigger asChild>
+        <div className="custom-node" style={{
         borderColor : borderColorOp, 
         backgroundColor: data.color, 
         borderWidth: borderSizeOp,
@@ -168,7 +183,27 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
             
         </Handle>
 
-    </div>
+        </div>
+    </Popover.Trigger>
+
+    <Popover.Portal>
+        <Popover.Content
+            className="PopoverContent"
+        >
+
+                Initial Value: 
+                <input
+                    className="item species-param-input"
+                    placeholder={`0`}
+                    value={data.initial}
+                    onChange={(e) => onInitChange(e)}
+                />
+        </Popover.Content>   
+
+    </Popover.Portal>
+    
+
+    </Popover.Root>
 
 
     );

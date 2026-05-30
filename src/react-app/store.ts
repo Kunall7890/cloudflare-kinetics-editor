@@ -370,6 +370,7 @@ const useStore = create<AppState>((set, get) => ({
 
 
     // Update the rate law type of a given reaction in both reactions and visualEdges
+    // TODO: When setting Edge Type to mass action, set all the participants to either reactant or product, NO CATALYST!
     updateEdgeType: (id, newEdgeType) => set((store) => {
 
       let newEdge = {} as reactions; // Kinda sketchy but idk how else to do this without changing a lot of code. This is just a placeholder variable we can use to hold the updated reaction with new edge type, which we can then use to update visualEdges correctly. This is mainly for handling the MichaelisMenten case where we need to add enzymeID and associated params when we change to that type.
@@ -409,9 +410,7 @@ const useStore = create<AppState>((set, get) => ({
           }
         } else {
           
-          // const current = get().reactions.find(item => item.id === id) || {participants: []};
           const currentEnzymeID = newEdge.participants.find(p => p.role === 'catalyst')?.id || '';
-          console.log('current enzyme id: ' + JSON.stringify(newEdge));
 
           return {
             ...e,

@@ -312,7 +312,7 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
     - Deleting a node on the front end of a reaction SHOULD allow the molecule to just be generated!
     - Only when both source and target nodes are empty should we delete the reaction
 
-### TODO
+
 - Right click node to edit properties
     - Initial value
     - Color
@@ -360,6 +360,18 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - Edit attributes of species by right clicking! (Initial values)
 
 - Fix auto michaelis-menten
+
+- Way better tool
+
+### TODO
+- Right click to edit color / initial values
+- Add parameters with buttons.
+    - Create new parameters
+    - Edit parameter values (global)
+    - Refactor parameters to be global / local
+- Better tooltips everywhere!
+- Multi-reactant arrows!
+    - Show multiple inputs / outputs
 
 
 # React + Vite + Hono + Cloudflare Workers
