@@ -383,6 +383,9 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 
 - When adding species / parameter to rate law, add a multiplication sign if there's not already one between two objects!
 
+- Smart / Snap Deleting!
+    - When we delete a node, automatically re-infer the reaction type for any involved reactions.
+
 ### TODO
 - [X] Right click to edit color / initial values
 - [X] Fix Michaelis-Menten adding duplicate parameters
@@ -391,6 +394,10 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
     - [X] Associate Parameter to reaction when added to rate law
 
 - [ ] Correctly update internal representation on node / edge deletion
+    - [ ] Update on Edge Deletion
+    - [ ] Update on Node Deletion
+        - [ ] Update Rate Laws
+    - [ ] BOTH Edge and Node (onDelete)
 
 - [ ] Multi-reactant arrows!
     - [ ] Show multiple inputs / outputs
@@ -402,6 +409,9 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - [ ] Better tooltips everywhere!
     - [ ] Clean up "Customize Rate Law" (remove hamburger and keyboard buttons)
     - [ ] Clean up debug bubbles
+
+- [ ] Better Errors when things don't run!
+    - [ ] Say what's wrong with the sim
 
 - [ ] Make build passing
 

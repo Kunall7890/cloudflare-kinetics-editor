@@ -10,6 +10,7 @@ import {
   type OnConnect,
   type OnConnectEnd,
   type OnEdgesDelete,
+  type OnNodesDelete,
   
 } from '@xyflow/react';
 
@@ -125,6 +126,7 @@ type AppState = {
   onConnect: OnConnect;
   onConnectEnd: OnConnectEnd;
   onEdgesDelete: OnEdgesDelete;
+  onNodesDelete: OnNodesDelete;
 
 
   setNodes: (nodes: AppNode[]) => void;
@@ -340,7 +342,53 @@ const useStore = create<AppState>((set, get) => ({
         reactions: store.reactions.filter(r => !edgeIDsToDelete.includes(r.id)),
         visualEdges: store.visualEdges.filter(e => !edgeIDsToDelete.includes(e.id)),
       }));
-      // console.log('Deleting edges: ' + JSON.stringify(edges, null, 2));
+    },
+
+    onNodesDelete: (nodes) => {
+      const nodeIDsToDelete = nodes.map(n => n.id);
+      let updatedReactions = [];
+
+      set((store) => ({
+        species: store.species.filter(s => !nodeIDsToDelete.includes(s.id)),
+        visualNodes: store.visualNodes.filter(n => !nodeIDsToDelete.includes(n.id)),
+
+
+        // reactions: store.reactions.map(r => ({
+        //   ...r,
+        //   participants: r.participants.filter(p => !nodeIDsToDelete.includes(p.id)),
+        //   rate_law: removeParticipantsFromRateLaw(r.rate_law, nodes.map(n => n.id)),
+        // })).filter(r => r.participants.length > 0), // Remove reactions with no participants
+
+        reactions: store.reactions.map(r => {
+          // Re-infer reaction types for all reactions with this involved node!
+          if (!r.participants.some(p => nodeIDsToDelete.includes(p.id))) {
+            return r;
+          }
+
+          const newRxn = {
+            ...r,
+            participants: r.participants.filter(p => !nodeIDsToDelete.includes(p.id)),
+          };
+
+          const rateType = predictRxnType(newRxn, get().species);
+          // get().updateEdgeType(newRxn, rateType); // Update the rate law type
+          updatedReactions.push({'id': newRxn.id, 'rateType': rateType}); 
+
+          return newRxn;
+        }),
+
+        // reactions: store.reactions.map(r => ({
+        //   ...r,
+        //   participants: r.participants.filter(p => !nodeIDsToDelete.includes(p.id)),
+        // })), // Remove reactions with no participants
+
+      }));
+
+      updatedReactions.forEach((r) => {
+        get().updateEdgeType(r.id, r.rateType); // Update the rate law type
+      });
+
+      // Re-evaluate data structures.
     },
 
 
@@ -793,3 +841,40 @@ function getDefaultRateLaw(reaction: reactions) {
 function numberToLetters(num: number) {
     return String(num).split('').map((digit) => String.fromCharCode(97 + Number(digit))).join('');
 }
+
+// When a node is deleted, we need to remove all instances of that node from rate laws!
+// This function removes a list of nodes from a given rate law string.
+// function removeParticipantsFromRateLaw(rate_law: string, nodes: string[]) {
+//   console.log('removing nodes: ' + nodes + ' from rate law: ' + rate_law);
+//   if (!rate_law) return rate_law;
+
+//   let updatedRateLaw = rate_law;
+//   // nodes.forEach(node => {
+//   //   const regex = new RegExp(`\\\\obj${node}\\{\\\\text\\{${node}\\}\\}(\\^\\{\\d+\\})?`, 'g');
+//   //   updatedRateLaw = updatedRateLaw.replace(regex, '');
+//   // });
+
+
+
+//   nodes.forEach(node => {
+//     // Regex expression to find all instances of node!
+
+//     // Extract exactly the correct species: `\\\\obj${node}\\{\\\\text\\{${node}\\}\\}`
+
+//     const regex = new RegExp(`\\\\obj${node}\\{\\\\text\\{${node}\\}\\}`, 'g');
+
+//     // [\\cdot]?
+//     // Sometimes cleaning will leave empty parentheses!
+//     const cleanupRegex = new RegExp(`\\(\\)`, 'g');
+//     // '\\obj'+ buttonID + '{\\text{' + buttonID + '}}'
+
+//     // console.log(`removing node ${node} with regex ${regex} gets: ` + updatedRateLaw.replace(regex, 'X'));
+//     console.log(`previous: ${updatedRateLaw}`);
+//     console.log(`new     : ${updatedRateLaw.replace(regex, '')}`);
+//     console.log(`cleaned : ${updatedRateLaw.replace(regex, '').replace(cleanupRegex, '')}`);
+
+//     updatedRateLaw = updatedRateLaw.replace(regex, '').replace(cleanupRegex, '');
+//   });
+
+//   return updatedRateLaw;
+// }

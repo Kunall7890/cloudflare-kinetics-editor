@@ -143,12 +143,13 @@ const selector = (state: ReturnType<typeof useStore.getState>) => ({
   onConnect: state.onConnect,
   onConnectEnd: state.onConnectEnd,
   onEdgesDelete: state.onEdgesDelete,
+  onNodesDelete: state.onNodesDelete,
 });
 
 
 export default function App() {
 
-  const { visualNodes, visualEdges, onNodesChange, onEdgesChange, onConnect, onConnectEnd, onEdgesDelete } = useStore(
+  const { visualNodes, visualEdges, onNodesChange, onEdgesChange, onConnect, onConnectEnd, onEdgesDelete, onNodesDelete } = useStore(
     useShallow(selector),
   );
 
@@ -178,6 +179,7 @@ export default function App() {
             onConnect={onConnect}
             onConnectEnd={onConnectEnd}
             onEdgesDelete={onEdgesDelete}
+            onNodesDelete={onNodesDelete}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             // connectionMode={ConnectionMode.Loose}
