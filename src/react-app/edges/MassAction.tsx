@@ -31,8 +31,55 @@ export default function MassActionEdge({
     markerEnd,
     data,
 }: EdgeProps<RxnEdgeType>) {
-    // const { deleteElements } = useReactFlow();
-    const [edgePath, labelX, labelY] = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+    const reactantIDs = useStore(store => store.reactions.find(r => r.id === id)?.participants)?.filter(p => p.role === 'reactant').map(p => p.id) ?? [];
+    const productIDs = useStore(store => store.reactions.find(r => r.id === id)?.participants)?.filter(p => p.role === 'product').map(p => p.id) ?? [];
+    
+    const reactantNodes = useStore(store => store.visualNodes).filter(n => reactantIDs.includes(n.id));
+    const productNodes = useStore(store => store.visualNodes).filter(n => productIDs.includes(n.id));
+
+    const reactantAvgX = reactantNodes.reduce((acc, node) => { return acc + node.position.x + 0.5 * (node.measured?.width ?? 100); }, 0) / reactantNodes.length;
+    const reactantAvgY = reactantNodes.reduce((acc, node) => { return acc + node.position.y + 0.5 * (node.measured?.height ?? 40); }, 0) / reactantNodes.length;
+
+    const productAvgX = productNodes.reduce((acc, node) => { return acc + node.position.x + 0.5 * (node.measured?.width ?? 100); }, 0) / productNodes.length;
+    const productAvgY = productNodes.reduce((acc, node) => { return acc + node.position.y + 0.5 * (node.measured?.height ?? 40); }, 0) / productNodes.length;
+
+    const avgX = (reactantAvgX + productAvgX) / 2;
+    const avgY = (reactantAvgY + productAvgY) / 2;
+
+    const forwardPaths = reactantNodes.map(reactant => {
+
+        const measured_height = reactant?.measured?.height || 40;
+        const measured_width = reactant?.measured?.width || 100;
+
+        const reactantX = reactant.position.x + measured_width;
+        const reactantY = reactant.position.y + measured_height / 2;
+
+        return getBezierPath({ 
+            sourceX: reactantX, 
+            sourceY: reactantY,
+            sourcePosition: sourcePosition,
+            targetX: avgX, 
+            targetY: avgY, 
+            targetPosition: targetPosition,
+        });
+    });
+
+    const reversePaths = productNodes.map(product => {
+
+        const measured_height = product?.measured?.height || 40;
+
+        const productX = product.position.x - 10;
+        const productY = product.position.y + measured_height / 2;
+
+        return getBezierPath({ 
+            sourceX: avgX, 
+            sourceY: avgY,
+            sourcePosition: sourcePosition,
+            targetX: productX, 
+            targetY: productY, 
+            targetPosition: targetPosition,
+        });
+    });
 
     const edgeColorOp = selected ? '#747bff' : '#ccc';
 
@@ -100,20 +147,47 @@ export default function MassActionEdge({
 
 
 
-            <BaseEdge 
-            id={id} 
-            path={edgePath} 
-            markerEnd={activeMarkerEnd}
-            style={{
-                stroke: edgeColorOp,
-                strokeWidth: '1px',
-            }}
-            />
+            {/* Render all forward paths */}
+            {
+                forwardPaths.map((path, index) => (
+                    <BaseEdge 
+                        key={index}
+                        id={id + '_sub_' + index}
+                        path={path}
+                        // markerEnd={activeMarkerEnd}
+                        // markerEnd={null}
+                        // animated={true}
+                        style={{
+                            stroke: edgeColorOp,
+                            strokeWidth: '2px',
+                        }}
+                    />
+                ))
+            }
+
+            {/* Render all reverse paths */}
+            {
+                reversePaths.map((path, index) => (
+                    <BaseEdge 
+                        key={index}
+                        id={id + '_sub_' + index}
+                        path={path}
+                        markerEnd={activeMarkerEnd}
+                        // markerEnd={null}
+                        // animated={true}
+                        style={{
+                            stroke: edgeColorOp,
+                            strokeWidth: '2px',
+                        }}
+                    />
+                ))
+            }
+
             <EdgeLabelRenderer>
                 <button 
                 onClick={onToggle}
                 style={{
-                    transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
+                    transform: `translate(-50%, -50%) translate(${avgX}px, ${avgY}px)`,
                 }}
                 className="edge-box nodrag nopan"
 
@@ -131,7 +205,7 @@ export function MassActionDrawerInfo({edgeID}: {edgeID: string;}) {
     return (
         <>
         
-        <p> MASS ACTION TEST {edgeID} </p>
+        {/* <p> MASS ACTION TEST {edgeID} </p> */}
 
         </>
     );

@@ -5,7 +5,6 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
   MarkerType,
-  useInternalNode,
   type OnNodesChange,
   type OnEdgesChange,
   type OnConnect,
@@ -20,13 +19,13 @@ import { convertLatexToAsciiMath } from "mathlive";
 import { type AppNode } from './ProteinNode';
 // import { type AppEdge } from './RxnEdge';
 import { 
-  MichaelisMentenEdge, 
-  ReversibleMassActionEdge, 
-  MassActionEdge,
+  // MichaelisMentenEdge, 
+  // ReversibleMassActionEdge, 
+  // MassActionEdge,
   initializeMichaelisEdge,
-  type MichaelisEdgeType,
-  type RevMAEdgeType,
-  type MAEdgeType,
+  // type MichaelisEdgeType,
+  // type RevMAEdgeType,
+  // type MAEdgeType,
   type AppEdge,
 } from './edges'
 
@@ -174,8 +173,6 @@ type AppState = {
   edgeHoverID: string; // id of edge we're hoving over (if any)
   setEdgeHovering: (open: boolean) => void;
   setEdgeHoverID: (id: string) => void;
-
-  getInternalNode(id: string) : AppNode | undefined;
 
 
 };
@@ -698,11 +695,6 @@ const useStore = create<AppState>((set, get) => ({
     setEdgeHovering: (open) => set({ edgeHovering: open }),
     setEdgeHoverID: (id: string) => set({ edgeHoverID: id }),
 
-    getInternalNode: (id: string) => {
-      const node = useInternalNode(id);
-      return node;
-    }
-
 }));
 
 
@@ -799,7 +791,8 @@ function predictRxnType(reaction: reactions, species: species[]) {
     return counts;
   }, {});
 
-  // ===========
+  // ==============================================================
+  // INFER RATE TYPE!
 
   // Logic to guess reaction type!
   if (((sTypeCounts['molecule'] || 0) === 1) && ((sTypeCounts['enzyme'] || 0) === 1) && ((tTypeCounts['molecule'] || 0) >= 1) && ((tTypeCounts['enzyme'] || 0) === 0)) {
@@ -809,11 +802,16 @@ function predictRxnType(reaction: reactions, species: species[]) {
   } else if (((sTypeCounts['molecule'] || 0) >= 1) && ((sTypeCounts['enzyme'] || 0) === 0) && ((tTypeCounts['molecule'] || 0) >= 1) && ((tTypeCounts['enzyme'] || 0) === 0)) {
     // at least 1 molecule -> at least 1 molecule
     // reversible mass action
-    return 'rev_mass_action';
+
+    // changed because not yet implemented
+    // return 'rev_mass_action';
+    return 'mass_action'
   } else if (((sTypeCounts['molecule'] || 0) === 1) && ((sTypeCounts['enzyme'] || 0) === 1) && ((tTypeCounts['molecule'] || 0) >= 0) && ((tTypeCounts['enzyme'] || 0) === 1)) {
     // one input + one enzyme -> one enzyme + any number of molecules
     // Hill function, ligands binding to macromolecules
     // Could also be for gene production
+
+    // changed because not yet implemented
     return 'hill_equation';
   }
 

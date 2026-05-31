@@ -26,6 +26,8 @@ Here's a few resources in case you get stuck while contributing. We're here to h
 - [Request / Report Something!](#request-report-something)
     - [How do I submit a Bug report?](#how-do-i-submit-a-bug-report)
     - [How do I submit a Request a feature?](#how-do-i-request-a-feature)
+- [Specific Feature Guides](#specific-feature-guides)
+    - [Creating a new reaction type](#creating-a-new-reaction-type)
 
 
 ## Code of Conduct
@@ -158,3 +160,37 @@ The best person to implement a feature is YOU! You're more qualified than you th
 Feature Requests are tracked as [GitHub issues](https://guides.github.com/features/issues/). Create an issue and fill in the required information. It helps us triage the feature quicker!
 
 Go to the PUBLIC repository (not your fork if you've created a fork), go to the "Issues" tab, and click "New Issue".
+
+
+# Specific Feature Guides
+## Creating a new reaction type
+You'll learn what general steps to follow when developing a new reaction type.
+
+Create a new file in [`src/react-app/edges`](https://github.com/MarkAStevens04/cloudflare-kinetics-editor/blob/main/src/react-app/edges) called something like `RXN.tsx`
+
+Copy code from `Custom.tsx` and paste into your new edge. Replace the following with a more accurate name for your edge type:
+1. `CustomEdgeType` -> `RXNEdgeType`
+2. `CustomEdge` -> `RXNEdge`
+3. `CustomDrawerInfo` -> `RXNDrawerInfo`
+
+In your RXNEdgeType, define the internal name for your edge by changing `'custom'` to whatever you want you would like your edge to be called internally (this is the id for your edge type). It would look something like:
+
+```
+export type RXNEdgeType = Edge<{ 
+    label: string; 
+    // toggleDrawer: (id: string) => void;
+    rate_law: string;
+    rate_type: string; 
+}, 'RXN'>;
+```
+
+Modify index.ts to include your edge! Copy the block for the CustomEdge, and replace with whatever names you chose for above. You'll also add the following pieces:
+1. `export type AppEdge ...` Make sure to add your EdgeType here
+2. `export const edgeTypes ...` Make sure to use the internal name you defined above.
+
+Go to `Drawer.tsx` and make the following modifications:
+1. Add information about your edge in the `reactionTypes` array. The id is the id for your edge type. The `label` is what the option will be shown as in the dropdown, and the `desc` is what the tooltip will show on hover. Change `implemented ` to true once you have finished implementing your edge.
+2. (optional) Add custom HTML that shows in the drawer for your edge! First import your `RXNDrawerInfo` at the top of `Drawer.tsx`. Then, in the section that says `Include rate type specific options`, add an option for your custom edge! This allows you to display some custom HTML for your edge. 
+
+(Optional) Go to `store.ts` and modify `predictRxnType`. Modify how we infer the rate type based on your specific reaction. Think, what kinds of inputs and outputs are unique to this reaction type? Make sure you're not overlapping too much with other reaction types.
+

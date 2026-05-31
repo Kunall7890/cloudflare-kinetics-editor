@@ -6,6 +6,10 @@ import {
  } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
+import './index.css';
+import './radix.css';
+import './styles/Banner.css';
+
 // Analytics
 import { init as initFullStory } from '@fullstory/browser';
 initFullStory({ orgId: 'o-24H0HZ-na1' });
@@ -275,10 +279,36 @@ export default function App() {
 
         <FeedbackDrawer />
 
+        <Banner />
+
         <RxnDrawer />
         <SimulationDrawer />
         
       
     </div>
+  );
+}
+
+
+// Lets use a Nav menu at the top of our project as a banner! https://www.radix-ui.com/primitives/docs/components/navigation-menu
+
+
+function Banner() {
+  return (
+  <div className="Banner">
+
+    <div className="BannerSection" >
+          <div className="BannerTitle">BIOBUILDER</div> 
+          <div className="BannerSubtitle">LIGHT</div>
+    </div>
+
+    <div className="BannerSection" style={{backgroundColor: '#0ff'}} />
+
+    <div className="BannerSection" style={{backgroundColor: '#0077b6'}} />
+
+  
+  
+  
+  </div>
   );
 }

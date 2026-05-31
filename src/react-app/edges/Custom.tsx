@@ -2,7 +2,7 @@ import {
     BaseEdge, 
     EdgeLabelRenderer,
     getBezierPath,
-    // useReactFlow,
+    // useReactFlow, 
     type Edge,
     type EdgeProps,
 } from '@xyflow/react';
@@ -10,20 +10,16 @@ import {
 import '../index.css';
 import useStore from '../store';
 
-
 import { type AppNode } from '../ProteinNode';
-import { accordionActionsClasses } from '@mui/material/AccordionActions';
 
-export type RevMAEdgeType = Edge<{ 
+export type CustomEdgeType = Edge<{ 
     label: string; 
     // toggleDrawer: (id: string) => void;
     rate_law: string;
     rate_type: string; 
-}, 'rev_mass_action'>;
+}, 'custom'>;
 
-
-
-export default function ReversibleMassActionEdge({ 
+export default function CustomEdge({ 
     id, 
     sourceX, 
     sourceY, 
@@ -35,8 +31,6 @@ export default function ReversibleMassActionEdge({
     markerEnd,
     data,
 }: EdgeProps<RxnEdgeType>) {
-
-    // const reactantIDs = useStore(store => store.reactions.find(r => r.id === id)?.participants.filter(p => p.role === 'reactant').map(p => p.id)) ?? [];
     const reactantIDs = useStore(store => store.reactions.find(r => r.id === id)?.participants)?.filter(p => p.role === 'reactant').map(p => p.id) ?? [];
     const productIDs = useStore(store => store.reactions.find(r => r.id === id)?.participants)?.filter(p => p.role === 'product').map(p => p.id) ?? [];
     
@@ -87,11 +81,7 @@ export default function ReversibleMassActionEdge({
         });
     });
 
-
-    const [edgePath, labelX, labelY] = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
-
     const edgeColorOp = selected ? '#747bff' : '#ccc';
-    const textColorOp = selected ? '#fff' : '#000';
 
     const activeMarkerEnd = selected ? 'url(#selected-marker)' : markerEnd;
 
@@ -100,7 +90,6 @@ export default function ReversibleMassActionEdge({
 
     const setEdgeHovering = useStore((store) => store.setEdgeHovering);
     const setEdgeHoverID = useStore((store) => store.setEdgeHoverID);
-
 
     // const onToggle = () => {
     //     data?.toggleDrawer(id);
@@ -143,7 +132,7 @@ export default function ReversibleMassActionEdge({
             <polyline
               className="arrowclosed"
               style={{
-                strokeWidth: '2px',
+                strokeWidth: 1,
                 stroke: '#747bff',
                 fill: '#747bff',
               }}
@@ -154,6 +143,8 @@ export default function ReversibleMassActionEdge({
           </marker>
         </defs>
       </svg>
+
+
 
 
             {/* Render all forward paths */}
@@ -192,17 +183,11 @@ export default function ReversibleMassActionEdge({
                 ))
             }
 
-
             <EdgeLabelRenderer>
                 <button 
                 onClick={onToggle}
                 style={{
                     transform: `translate(-50%, -50%) translate(${avgX}px, ${avgY}px)`,
-                    // transform: `translate(${avgX}px, ${avgY}px)`,
-                    // borderColor: edgeColorOp, // Makes it so edge is highlighted when selected, but overrides natural highlighting on hover 
-                    backgroundColor: edgeColorOp,
-                    color: textColorOp,
-                    outline: '0px',
                 }}
                 className="edge-box nodrag nopan"
 
@@ -210,21 +195,17 @@ export default function ReversibleMassActionEdge({
                 onMouseLeave={() => onLeave()}
                 > {data?.label ?? 'Default Label'} </button>
             </EdgeLabelRenderer>
-
         </>
-
-
-        
 
     );
 }
 
 
-export function ReversibleMassActionDrawerInfo() {
+export function CustomDrawerInfo({edgeID}: {edgeID: string;}) {
     return (
         <>
         
-        {/* <p> REVERSIBLE MASS ACTION TEST </p> */}
+        {/* <p> CUSTOM TEST {edgeID} </p> */}
 
         </>
     );

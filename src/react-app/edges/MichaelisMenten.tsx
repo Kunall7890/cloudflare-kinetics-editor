@@ -181,23 +181,23 @@ export default function MichaelisMentenEdge({
 
 export function MichaelisMentenDrawerInfo({edgeID}: {edgeID: string;}) {
 
-    const currentEnzymeID = useStore(store => {
-        const current = store.reactions.find(item => item.id === edgeID) || {participants: []};
-        return current.participants.find(p => p.role === 'enzyme')?.id || '';
-    });
+    // const currentEnzymeID = useStore(store => {
+    //     const current = store.reactions.find(item => item.id === edgeID) || {participants: []};
+    //     return current.participants.find(p => p.role === 'enzyme')?.id || '';
+    // });
 
-    const associated_params = useStore(store => {
-        const current = store.reactions.find(item => item.id === edgeID) || {associated_params: []};
-        return current.associated_params
-    });
+    // const associated_params = useStore(store => {
+    //     const current = store.reactions.find(item => item.id === edgeID) || {associated_params: []};
+    //     return current.associated_params
+    // });
 
     return (
         <>
         
-        <p> MICHAELIS-MENTEN TEST </p>
+        {/* <p> MICHAELIS-MENTEN TEST </p>
         <p> Catalyzing enzyme: {currentEnzymeID} </p>
         <p> RATE: V * a / K_m + a, where V is limiting rate, a is concentration of substrate, K_m is the Michaelis Constant.</p>
-        <p> NOTE: We're making the assumption that enzyme concentration is much less than substrate concentration!</p>
+        <p> NOTE: We're making the assumption that enzyme concentration is much less than substrate concentration!</p> */}
 
         </>
     );

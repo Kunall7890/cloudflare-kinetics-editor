@@ -40,6 +40,7 @@ import {
   MichaelisMentenDrawerInfo, 
   MassActionDrawerInfo,
   ReversibleMassActionDrawerInfo,
+  CustomDrawerInfo,
 } from './edges'
 
 
@@ -94,27 +95,33 @@ export default function RxnDrawer() {
         {
             'id': 'michaelis_menten',
             'label': 'Michaelis-Menten',
-            'desc': 'When you want to simulate an enzyme catalyzing some reaction. \n \n ASSUMPTIONS: Substrate is in excess, enzyme is very small.'
+            'desc': 'When you want to simulate an enzyme catalyzing some reaction. \n \n ASSUMPTIONS: Substrate is in excess, enzyme is very small.',
+            'implemented': true,
         },
         {
             'id': 'mass_action',
             'label': 'Mass Action',
-            'desc': 'When you want to simulate a simple reaction, of some reactant(s) becoming some product(s).'
+            'desc': 'When you want to simulate a simple reaction, of some reactant(s) becoming some product(s).',
+            'implemented': true,
         },
         {
             'id': 'rev_mass_action',
             'label': 'Reversible Mass Action',
-            'desc': 'When you want to simulate a simple, reversible reaction, of some reactant(s) becoming some product(s) and vice versa.'
+            'desc': 'When you want to simulate a simple, reversible reaction, of some reactant(s) becoming some product(s) and vice versa.',
+            // Needs to have two parameters, one for forward rxn and one for reverse rxn, alongside creating separate rate laws for forward & reverse rxn, alongside backwards arrows in path!
+            'implemented': false,
         },
         {
             'id': 'hill_equation',
             'label': 'Hill Equation',
-            'desc': 'When you want to simulate a ligand binding to a molecule with multiple binding sites, like oxygen binding to hemoglobin.'
+            'desc': 'When you want to simulate a ligand binding to a molecule with multiple binding sites, like oxygen binding to hemoglobin.',
+            'implemented': false,
         },
         {
             'id': 'custom',
             'label': 'Custom',
-            'desc': 'When you want to define a custom rate law using your own equations.'
+            'desc': 'When you want to define a custom rate law using your own equations.',
+            'implemented': true,
         },
     ];
     
@@ -292,8 +299,8 @@ export default function RxnDrawer() {
 
                                         {reactionTypes.map((type) => (
 
-                                            <Select.Item className="SelectItem" value={type.id}>
-                                                <Select.ItemText> {type.label} </Select.ItemText>
+                                            <Select.Item className="SelectItem" value={type.id} disabled={!type.implemented} >
+                                                <Select.ItemText> {type.implemented ? `${type.label}` : `${type.label} (COMING SOON)`} </Select.ItemText>
                                                 <Select.ItemIndicator className="SelectItemIndicator">
                                                     <CheckIcon />
                                                 </Select.ItemIndicator>
@@ -363,6 +370,8 @@ export default function RxnDrawer() {
                         <ReversibleMassActionDrawerInfo />  
                     : edge.rate_type === 'michaelis_menten' ?
                         <MichaelisMentenDrawerInfo edgeID={edge.id} />
+                    : edge.rate_type === 'custom' ?
+                        <CustomDrawerInfo edgeID={edge.id} />
                     :
                         <p> { edge.rate_type } </p>
                 }

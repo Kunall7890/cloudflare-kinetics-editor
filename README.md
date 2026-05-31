@@ -384,7 +384,13 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - Change edges to be parent & sub edge, that way you can more efficiently call updates.
     - Like reversible mass action, each edge to middle should be an independent edge, and each edge out of middle should be indep too.
 
+- Become custom rate law type after editing rate law for the first time!
+
 - When adding species / parameter to rate law, add a multiplication sign if there's not already one between two objects!
+
+- Move index.css and radix.css into styles folder
+
+- Turn many areas where we have lists of parameters / edges into scrollable elements!
 
 - Smart / Snap Deleting!
     - When we delete a node, automatically re-infer the reaction type for any involved reactions.
@@ -401,8 +407,8 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
     - [X] Update on Node Deletion
         - [X] Update Rate Laws
 
-- [ ] Multi-reactant arrows!
-    - [ ] Show multiple inputs / outputs
+- [X] Multi-reactant arrows!
+    - [X] Show multiple inputs / outputs
 
 - [ ] Banner on top
     - GitHub
@@ -411,6 +417,7 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - [ ] Better tooltips everywhere!
     - [ ] Clean up "Customize Rate Law" (remove hamburger and keyboard buttons)
     - [ ] Clean up debug bubbles
+    - [ ] Say "Coming Soon" to non-implemented reaction types
 
 - [ ] Better Errors when things don't run!
     - [ ] Say what's wrong with the sim
