@@ -71,14 +71,6 @@ type errorMSG = {
   linked_edges: string[];
 }
 
-// IDEA for new data structure for reaactions.
-// Change sources and targets to instead be list of objs.
-// {
-//  'id': 'Na',
-//  'role': 'reactant' / 'product' / 'catalyst' ,
-//  'coefficient': 1,
-// }
-
 
 type params = {
   id: string;
@@ -114,11 +106,6 @@ const initialEdges: AppEdge[] = [{ id: 'Na_Nb', source: 'Na', target: 'Nb' , mar
 
 type AppState = {
 
-  debugState: string;
-  setDebugState: (newState: string) => void;
-  debugState2: string;
-  setDebugState2: (newState: string) => void;
-
   species: species[];
   reactions: reactions[];
   simParams: params[];
@@ -134,7 +121,6 @@ type AppState = {
   onConnectEnd: OnConnectEnd;
   onEdgesDelete: OnEdgesDelete;
   onNodesDelete: OnNodesDelete;
-
 
   setNodes: (nodes: AppNode[]) => void;
   setEdges: (edges: AppEdge[]) => void;
@@ -153,7 +139,6 @@ type AppState = {
 
   simDrawerOpen: boolean;
   setSimDrawerOpen: (open: boolean) => void;
-
 
   updateSpeciesLabel: (id: string, newLabel: string) => void;
   updateRateLaw: (id: string, newRateLaw: string) => void;
@@ -204,11 +189,7 @@ type AppState = {
 const useStore = create<AppState>((set, get) => ({
 
     // Add Initial Variables
-    debugState: 'nothing',
-    setDebugState: (newState) => set({ debugState: newState }),
-    debugState2: 'nothing',
-    setDebugState2: (newState) => set({ debugState2: newState }),
-    tempParamName: '',
+    tempParamName: '', 
     tempParamValue: '',
 
     focusedTarget: null,
@@ -297,7 +278,6 @@ const useStore = create<AppState>((set, get) => ({
       newRxn.rate_type = rateType;
 
       get().updateEdgeType(newRxn.id, rateType); // Update the rate law type
-      set({ debugState2: 'rate types: ' + rateType});
 
       set((store) => ({
         
@@ -343,11 +323,9 @@ const useStore = create<AppState>((set, get) => ({
         // Handles differently depending on whether our connection originated from a source handle or a target handle...
         if (connectionState.fromHandle.type === 'source') {
           addSource(nodeToAdd, targetRxn);
-          set({ debugState: 'connecting to edge! sources: ' + targetRxn.sources});
 
         } else if (connectionState.fromHandle.type === 'target') {
           addTarget(nodeToAdd, targetRxn);
-          set({ debugState: 'connecting to edge! targets: ' + targetRxn.targets});
 
         } else {
           // Default to adding it as a source...
@@ -356,7 +334,6 @@ const useStore = create<AppState>((set, get) => ({
           console.log('ERROR!! Unknown Handle type, whether source or sink.');
           console.log('When connecting from a species to a reaction edge, we gotta figure out whether we are starting from a source handle or a target handle. Right now, we dont know which it is.');
           console.log(connectionState.fromHandle.type);
-          set({ debugState: 'unknown handle type...' + connectionState.fromHandle.type});
 
         }
 
@@ -364,11 +341,7 @@ const useStore = create<AppState>((set, get) => ({
         const rateType = predictRxnType(targetRxn, get().species);
         get().updateEdgeType(targetRxnID, rateType); // Update the rate law type
 
-        set({ debugState2: 'rate types: ' + rateType});
 
-
-      } else {
-        set({ debugState: 'old position'});
       }
     },
 

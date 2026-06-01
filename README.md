@@ -400,6 +400,8 @@ I'll use this in the tooltips to help users address common mistakes!
 
 - Turn many areas where we have lists of parameters / edges into scrollable elements!
 
+- Multiple inputs / outputs on Michaelis Menten
+
 - Smart / Snap Deleting!
     - When we delete a node, automatically re-infer the reaction type for any involved reactions.
 

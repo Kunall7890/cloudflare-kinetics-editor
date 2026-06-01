@@ -176,13 +176,6 @@ export default function App() {
 
   // Function to add a Node (uses Zustand store)
   const addNode = useStore((store) => store.addNode);
-  
-  // Debug labels
-  const updateLabel = useStore((store) => store.setDebugState);
-  const debugLabel = useStore((store) => store.debugState);
-  const updateLabel2 = useStore((store) => store.setDebugState2);
-  const debugLabel2 = useStore((store) => store.debugState2);
-  const openToast = useStore((store) => store.setErrorOpen);
 
 
   return (
@@ -248,41 +241,6 @@ export default function App() {
           >
             Add <div className="action-button-strong-text">Enzyme</div>
           </button>
-
-
-
-
-          <button 
-            className="action-button"
-
-            onClick={
-              () => updateLabel('updated!')
-            }
-
-            style={{
-              backgroundColor: NODE_COLORS[2]
-            }}
-
-          >
-            Add <div className="action-button-strong-text">{debugLabel}</div>
-          </button>
-
-          <button 
-            className="action-button"
-
-            onClick={
-              () => openToast(true)
-            }
-
-            style={{
-              backgroundColor: NODE_COLORS[3]
-            }}
-
-          >
-            Add <div className="action-button-strong-text">{debugLabel2}</div>
-          </button>
-
-          
 
 
         </div>
