@@ -1,12 +1,14 @@
+// This is the Drawer that pops out when a reaction is selected!
+
 // Arrow function () => handleClick(0) kind of stores a function call!
   // It says "Hey, I know you're expecting a function here. I have the function
   // that I want you to call, and I can run it myself. So just let me know when you want
   // to run that function, and I'll do it for you." The parent board is taking over this
   // child's job because the parent knows the right parameters to give it, wheras the
   // child wouldn't be able to provide ANY parameters to the function.
-import { ChangeEvent, useRef, useEffect, useMemo, ReactNode } from 'react';
+// import React from 'react';
+import { ChangeEvent, useRef, useEffect, useMemo } from 'react';
 import { animated, useTransition } from '@react-spring/web';
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 
 import './index.css';
 import './radix.css';
@@ -59,6 +61,7 @@ type reactantEditorProps = {
     participants: {id: string, role: string, coefficient: number}[];
     rxnID: string;
 }
+
 
 export default function RxnDrawer() {
 
@@ -138,11 +141,9 @@ export default function RxnDrawer() {
         updateRateLaw(RxnID, event.target.value);
     }
 
-    const reactantNodes = useMemo(() => {
-        return (edge.sources || [])
-            .map((srcId) => nodes.find((node) => node.id === srcId))
-            .filter((node): node is Exclude<typeof node, undefined> => !!node);
-    }, [edge.sources, nodes]);
+    const onRChange = (event: ChangeEvent<HTMLInputElement>) => {
+        updateInitialConcentration(sourceNode.id, event.target.value);
+    }
 
     const onPChange = (event: ChangeEvent<HTMLInputElement>) => {
         updateInitialConcentration(targetNode.id, event.target.value);
@@ -192,8 +193,7 @@ export default function RxnDrawer() {
                         borderRight: "1px solid #ddd",
                         boxShadow: "0 0 20px rgba(0, 0, 0, 0.12)",
                         transform: style.x.to((x) => `translate3d(${x}px, 0, 0)`),
-                        opacity: style.opacity,
-                        overflowY: 'auto'
+                        opacity: style.opacity
                     }}
                 > 
                 <br /> <br />
@@ -205,85 +205,67 @@ export default function RxnDrawer() {
                         placeholder="Reaction Name"
                         value={edge.label}
                         onChange={onRNameChange}
+                        
                     />
                 </div>
 
                 <br />
-                <div className="drawer-reaction-diagram" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                <div className="drawer-reaction-diagram">
 
-                    {/* Reactants List */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                        <p style={{ margin: '0 0 8px 0', fontSize: '0.8em', fontWeight: 600, color: 'rgba(0,0,0,0.6)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Reactants</p>
-                        <ScrollArea style={{ maxHeight: '180px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
-                                {reactantNodes.map((sNode) => (
-                                    <div key={sNode.id} className="species-container" style={{ backgroundColor: sNode.color }}>
-                                        <div className="species-container-header" style={{ fontSize: '1.1em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={sNode.label}>
-                                            {sNode.label}
-                                        </div>
-                                        <hr style={{
-                                            border: 'none',
-                                            height: '1px',
-                                            backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                                            margin: '0px 0',
-                                            padding: 0,
-                                        }} />
-                                        <div className="species-params" style={{ fontSize: '0.85em', display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '4px 0' }}>     
-                                            <span>Initial:</span>
-                                            <input 
-                                                className="item species-param-input"
-                                                placeholder="0" 
-                                                value={sNode.initial === '' ? '' : sNode.initial}
-                                                onChange={(e) => updateInitialConcentration(sNode.id, e.target.value)}
-                                                style={{ width: '50px', margin: 0, padding: '2px 4px' }}
-                                            />
-                                        </div>    
-                                    </div>
-                                ))}
-                            </div>
-                        </ScrollArea>
+                    {/* Reactant Parameters */}
+                    <div className="species-container" style={{
+                        backgroundColor: reactantColor,
+                    }}>
+                        <div className="species-container-header"> {reactantLabel} </div>
+                        <hr style={{
+                            border: 'none',
+                            height: '1px',
+                            backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                            margin: '0px 0',
+                            padding: 0,
+                        }} />
+                        <div className="species-params">     
+                            Initial: 
+                            <input 
+                                className="item species-param-input"
+                                placeholder={`0`} 
+                                value={reactantInit === '' ? '' : reactantInit}
+                                onChange={onRChange}
+                            />
+                        </div>    
+
                     </div>
+
 
                     {/* Arrow connecting reactants to products */}
                     <p style={{
                         fontSize: '24px',
-                        fontWeight: 'bold',
-                        margin: '0 4px',
-                        alignSelf: 'center',
-                        color: 'rgba(0,0,0,0.4)',
                     }}>→</p>
+                    
 
-                    {/* Products List */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                        <p style={{ margin: '0 0 8px 0', fontSize: '0.8em', fontWeight: 600, color: 'rgba(0,0,0,0.6)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Products</p>
-                        <ScrollArea style={{ maxHeight: '180px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
-                                {productNodes.map((tNode) => (
-                                    <div key={tNode.id} className="species-container" style={{ backgroundColor: tNode.color }}>
-                                        <div className="species-container-header" style={{ fontSize: '1.1em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={tNode.label}>
-                                            {tNode.label}
-                                        </div>
-                                        <hr style={{
-                                            border: 'none',
-                                            height: '1px',
-                                            backgroundColor: 'rgba(0, 0, 0, 0.15)',
-                                            margin: '0px 0',
-                                            padding: 0,
-                                        }} />
-                                        <div className="species-params" style={{ fontSize: '0.85em', display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '4px 0' }}>     
-                                            <span>Initial:</span>
-                                            <input 
-                                                className="item species-param-input"
-                                                placeholder="0" 
-                                                value={tNode.initial === '' ? '' : tNode.initial}
-                                                onChange={(e) => updateInitialConcentration(tNode.id, e.target.value)}
-                                                style={{ width: '50px', margin: 0, padding: '2px 4px' }}
-                                            />
-                                        </div>    
-                                    </div>
-                                ))}
-                            </div>
-                        </ScrollArea>
+
+                    {/* Product Parameters */}
+                    <div className="species-container" style={{
+                        backgroundColor: productColor,
+                    }}>
+                        <div className="species-container-header"> {productLabel} </div>
+                        <hr style={{
+                            border: 'none',
+                            height: '1px',
+                            backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                            margin: '0px 0',
+                            padding: 0,
+                        }} />
+                        <div className="species-params">     
+                            Initial: 
+                            <input 
+                                className="item species-param-input"
+                                placeholder={`0`} 
+                                value={productInit === '' ? '' : productInit}
+                                onChange={onPChange}
+                            />
+                        </div>    
+
                     </div>
                 </div>
                 <br />
@@ -575,19 +557,15 @@ function RateEditor({
     // When a variable button is clicked
     const onButton = (buttonID: string) => {
         mfRef.current?.insert('\\obj'+ buttonID + '{\\text{' + buttonID + '}}', {
+            // focus: true,
             insertionMode: "replaceSelection",
             selectionMode: "item",
-            focus: true,
         });
         console.log('Macros: ' + mfRef.current?.macros);
-    }
 
-    // When a parameter button is clicked
-    const onParameter = (paramName: string) => {
-        mfRef.current?.insert(paramName, {
-            insertionMode: "replaceSelection",
-            focus: true,
-        });
+        // mfRef.current?.applyStyle({
+        //     color: buttonColor,
+        // });
     }
 
     const onParamButtonSelect = (buttonID: string) => {
@@ -606,6 +584,7 @@ function RateEditor({
         ]);
 
     }, [nodes, params]);
+
 
     useEffect(() => {
         const mf = mfRef.current;

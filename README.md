@@ -433,7 +433,7 @@ I'll use this in the tooltips to help users address common mistakes!
     - [X] Say what's wrong with the sim
     - [X] Improve error logging on Python side
 
-- [ ] Make build passing
+- [X] Make build passing
 
 - [ ] Make video tutorial
     - [X] Little sign that says "Hey! Looks like you're new here. Please watch this 2min tutorial!"
