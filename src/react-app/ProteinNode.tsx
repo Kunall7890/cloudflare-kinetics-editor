@@ -2,22 +2,19 @@
 import { Handle, Position, type Node, type NodeProps } from '@xyflow/react';
 import { ChangeEvent } from 'react';
 import './index.css';
+import './styles/Nodes.css'
+import './radix.css';
 import useStore from './store';
+
 
 type ProteinNodeType = Node<{ 
     label: string; 
-    // onLabelChange: (id: string, value: string) => void;
     color: string;
     initial: string;
+    speciesType: string; // Types stored in store.ts
 }, 'protein'>;
 
 export type AppNode = ProteinNodeType;
-
-const DEFAULT_HANDLE_STYLE = {
-  width: '8px',
-  height: '8px',
-  background: 'black',
-};
 
 
 
@@ -25,6 +22,8 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
 
 
     const updateLabel = useStore((store) => store.updateSpeciesLabel);
+    const updateInitialConcentration = useStore((store) => store.updateInitialConcentration);
+    const updateColor = useStore((store) => store.updateColor);
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         // data.onLabelChange(id, event.target.value);
@@ -32,20 +31,37 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
 
     }
 
+    const onInitChange = (event: ChangeEvent<HTMLInputElement>) => {
+        updateInitialConcentration(id, event.target.value);
+    }
+
+    const onColorChange = (event: ChangeEvent<HTMLInputElement>) => {
+        updateColor(id, event.target.value);
+    }
+
     const borderColorOp = selected ? '#747bff' : "#ccc";
     const borderSizeOp = selected ? '2px' : '0px';
-    const selectPadding = selected ? '12px 9px' : '12px 12px';
+    const selectPadding = selected ? '12px 9px 6px 9px' : '12px 12px';
 
+    const borderRadius = data.speciesType === 'molecule' ? '24px' : '0px'; // Previous was 4px
+
+    // const handleColor = '#e63946';
+    const handleColor = data.color;
+    
 
     return (
+        <div 
+            className="custom-node" 
+            style={{
+                borderColor : borderColorOp, 
+                backgroundColor: data.color, 
+                borderWidth: borderSizeOp,
+                padding: selectPadding,
+                borderRadius: borderRadius,
+                // height: selected ? '6em' : '3em',
+            }}
 
-    <div className="custom-node" style={{
-        borderColor : borderColorOp, 
-        backgroundColor: data.color, 
-        borderWidth: borderSizeOp,
-        padding: selectPadding,
-        
-        }}>
+        >
         
         {/* Option where you have to double click */}
         {selected ? <input 
@@ -87,20 +103,83 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
             }}
             /> */}
 
+
+        { selected && 
+            <div className="NodeEditor">
+                <div className="NodeRow">
+                    Initial Value: 
+                    <input
+                        className="item species-param-input NodeRowItem"
+                        placeholder={`0`}
+                        value={data.initial}
+                        onChange={(e) => onInitChange(e)}
+                        style={{fontSize: '0.8em', borderRadius: '4px', borderWidth: '2px'}}
+                    />
+                </div>
+
+                <div className="NodeRow">
+                    Color:
+                    <input
+                        className="item species-param-input NodeRowItem"
+                        type="color"
+                        defaultValue={data.color}
+                        onChange={(e) => onColorChange(e)}
+                        style={{
+                            backgroundColor: 'rgba(255, 255, 255, 1)',
+                            padding: '0px',
+                        }}
+                    />
+                </div>
+
+
+            </div>
+        }
+        
+
+
+
+
+
         <Handle 
             type="target" 
             position={Position.Left} 
-            style={{ 
-                ...DEFAULT_HANDLE_STYLE,
-                pointerEvents: 'all',
-            }} 
+            // style={{ 
+            //     ...DIAMOND_STYLE,
+            //     pointerEvents: 'all',
+            // }} 
+            style={{
+                background: 'none',
+                width: '1.5em',
+                height: '1.5em',
+                alignItems: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                border: 'none',
+            }}
+            className="handle"
+
         >
-            <div
-                className="handle-hitbox"
+
+        {/* Depending on species type, render different handle shapes */}
+        {data.speciesType === 'molecule' ? 
+            <div className="handle-circle" style={{borderColor: handleColor, background: 'white'}} />
+        : data.speciesType === 'enzyme' ?
+            <div className="handle-diamond" style={{borderColor: handleColor, background: 'white'}} />
+        :
+            <TriangleWithBorder sColor={handleColor} bColor={'white'} />
+        }
+            
+            {/* <div className="handle-diamond" style={{borderColor: handleColor, background: 'white'}} /> */}
+            {/* <div className="handle-circle" style={{borderColor: handleColor, background: 'white'}} /> */}
+            {/* <TriangleWithBorder sColor={handleColor} bColor={'white'} /> */}
+
+            <div 
+                className="handle-hitbox" 
                 style={{
-                    transform: 'translate(-35%, -35%)',
+                    transform: 'translate(-15%, -35%)',
                 }}
             />
+
         </Handle>
 
 
@@ -109,19 +188,54 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
             type="source" 
             position={Position.Right} 
             style={{
-             ...DEFAULT_HANDLE_STYLE
-             }}
+                background: 'none',
+                width: '1.5em',
+                height: '1.5em',
+                alignItems: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                border: 'none',
+            }}
         > 
+
+            
+
+
+        {data.speciesType === 'molecule' ? 
+            <div className="handle-circle" style={{borderColor: 'rgba(255, 255, 255, 1)', background: handleColor}} />
+        : data.speciesType === 'enzyme' ?
+            <div className="handle-diamond" style={{borderColor: 'rgba(255, 255, 255, 1)', background: handleColor}} />
+        :
+            <TriangleWithBorder sColor={'rgba(255, 255, 255, 1)'} bColor={handleColor} />
+        }
+
+
             <div 
                 className="handle-hitbox" 
                 style={{
                     transform: 'translate(-15%, -35%)',
                 }}
             />
+            
         </Handle>
 
-    </div>
+        </div>
+
+    );
+}
 
 
+
+function TriangleWithBorder({ sColor, bColor }: { sColor: string; bColor: string }) {
+    return (
+        <svg width="44" height="44" viewBox="0 0 44 44">
+            <polygon
+                points="22,4 4,38 40,38"
+                fill={bColor}
+                stroke={sColor}
+                strokeWidth="6"
+                strokeLinejoin="round"
+            />
+        </svg>
     );
 }

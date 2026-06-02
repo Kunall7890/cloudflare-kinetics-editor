@@ -140,7 +140,18 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - Z index saved. So as you click, all Z-indices for edges come up
 - When adding multiple nodes, if a node is deleted, roll your index back by one so you get a new node that was the same color as the one you deleted!
 - Allow back and forth with reactions! Make them reversible if desired.
-    - See https://reactflow.dev/examples/nodes/easy-connect for details
+    - See https://reactflow.dev/examples/nodes/easy-connect for details\
+
+- Different types / names
+    - Protein, Enzyme / Catalyst
+    - Ligand, Substrate / Metabolite
+    - Complex
+    - DNA, RNA, DNA-Binding Protein, etc.
+
+
+### User stories!
+- Come up with some user stories! 
+- Who are the people you want to use this app? What would they use it for?
 
 ### Simulation
 - After simulating, change width and color of reaction networks
@@ -208,6 +219,8 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - Edges have arrows on them denoting direction
 - Can change where edge ends at (look at reconnectable attr https://reactflow.dev/api-reference/types/edge)
 - Copy and paste edges
+
+- When changing edge name, click anywhere on that gray box (not just directly over text) to edit
  
 
 ### Decoration
@@ -265,6 +278,31 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - You can select the arrow type (regular, inhibit, big circle to represent catalyzation, etc.)
 - Then, you use the arrow on the reactants! That way you can think high-level instead of thinking about rates.
 
+### Merge parameters
+- When looking at params, have a list. Name: `param_name`, In reactions: `list of associated rxns`, checkbox
+- You can select all the checkboxes of the params you want to merge, then click `merge params` which merges all of the parameters!
+- Might need to implement a function like `scan_rxn` which looks for all associated parameters, and updates the `associated_params` attribute.
+    - AFTER doing this, you can search rxns by their associated_params, then update the relevant parameters.
+
+### Optimizations
+- Update in store.ts the reactions, params, and species to be maps so you can lookup by id.
+
+### Modifying preset reactions
+- When modifying the rate law of a pre-defineed reaction (like modifying michaelis-menten), call it something else. Like "modified michaelis-menten" so that it's clear that this is NOT vanilla michaelis-menten. Add a little button on the side that allows you to reset back to default michaelis-menten.
+
+### General
+- Add link to GitHub from biobuilder page!
+
+### Types of mechanisms
+- Have like parent types of reaction mechanisms, and child types that can be edited
+- So you can select "inhibition", then easily change what type of inhibition is occurring.
+- Or with michaelis-menten, you can select "simplified" or "explicit" to swap between michaelis-menten version and full enzymatic version!
+
+### Common Failure reasons
+I'll use this in the tooltips to help users address common mistakes!
+- Using Square Brackets
+- Using Curly Brackets
+
 ### Urgent
 - Return differential equations
 - **better logging in Python for vercel**
@@ -273,6 +311,134 @@ As with any project, ideas can quickly outpace capacity. Here's some ideas of wh
 - Weird labels on connections
 - Arrows shouldn't always output on right, should be able to go from either direction
 - HIGHLIGHT WHEN YOU HAVE AN EMPTY RATE LAW!!! When you click simulate, run quick check to make sure rate laws are all filled.
+- DELETING NODES AND EDGES DOESN'T REMOVE THEM FROM THE INTERNAL REPRESENTATION!!!!! Very strange. 
+    - CAN ADD DUPLICATE REACTIONS TO INTERNAL REPRESENTATION!! Should NOT be the case. Maybe need separate function to add and remove nodes and edges.
+- Deleting a node on the other end of a reaction SHOULD allow the molecule to just degrade over time!
+    - Deleting a node on the front end of a reaction SHOULD allow the molecule to just be generated!
+    - Only when both source and target nodes are empty should we delete the reaction
+
+
+- Right click node to edit properties
+    - Initial value
+    - Color
+    - Copy (including all edges) or copy (not including all edges)
+    - Called a "Context menu"
+- Graph visual changes
+    - Edit properties like simulation time
+    - Zoom in / out on graph
+    - button to allow you to select what reactants to visualize
+- Different edges for each reaction input / output. Like, michaelis-menten, the catalyst arrow is its own edge.
+    - Selecting the central rectangle selects all inputs / outputs.
+- Picking up and dragging a handle drags that shape
+    - Dragging a diamond causes a little diamond shape to move around!
+- Reaction type dropdown selection in drawer
+    - Different options depending on reaction type
+    - *** Interpret rate laws differently depending on reaction type!! *** Like, when packaging info to send to simulation engine, handle each reaction type differently.
+- Handle parameters better
+    - Package them for simulation
+    - Allow editing in SIMULATE dropdown menu
+    - BUGFIX!! Do simple michaelis menten, then add a 2nd product. Vmax and Km get duplicated. Need to double check params don't exist before adding more.
+- Michaelis-Menten, change what your enzyme is
+    - Modify what your enzymeID is in the Michaelis-Menten kinetics!
+    - More Robust "important chemical" handling. Make it a dictionary or something instead? So instead of "enzymeID: string" we would have "keystoneIDs: string[]"
+- Add Inhibition mechanism!
+- Fix deleting rates.
+
+- Change number of reactants in a reaction! 
+    - Like 2X + Y -> Z
+    - Little button at bottom that lets you add reactants / products straight from drawer
+
+- Internal representation of reactants & products
+    - Fix MichaelisMenten Representation & finding enzyme
+    - Package simulation 
+
+- Global vs local parameters?
+    - Similar to adding species, add parameters!
+    - Fix local vs global params. Very weird stuff rn.
+
+- Fix coefficients not working when DOING simulation!
+
+- Make CSV downloadable
+
+- Draw Multiple reactants and Products.
+
+- Edit attributes of species by right clicking! (Initial values)
+
+- Fix auto michaelis-menten
+
+- Way better tool
+
+- Better reactant editor
+    - Little animation on open / close
+    - Little Drawer opens up to edit the node! Searchable on Uniprot.
+
+- Better parameter editor
+    - Right clicking "tunable parameters" lets you "de-associate" a parameter from the reaction.
+    - You can see a list of parameters, and to the right, see all associated reactions. You can scroll to the left and right to see lits of chips of all associated rxns.
+    - Refactor parameters to be global / local
+        - "Tunable Parameters" is just a list of parameters curretnly in rate law. Possibly make value draggable?
+        - You can add existing parameters from a list, or create new parameters also from that list! 
+    - Edit parameter values (global)
+
+- Everything in Drawer is a collapsible item. That way it's less overwhelming.
+
+- Add "catalysts" underneath "edit coefficients"
+
+- Change edges to be parent & sub edge, that way you can more efficiently call updates.
+    - Like reversible mass action, each edge to middle should be an independent edge, and each edge out of middle should be indep too.
+
+- Become custom rate law type after editing rate law for the first time!
+
+- When adding species / parameter to rate law, add a multiplication sign if there's not already one between two objects!
+
+- Move index.css and radix.css into styles folder
+
+- Add little "learn" and "overview" buttons at top!
+    - Similar to Navigation-Menu from radix-ui! https://www.radix-ui.com/primitives/docs/components/navigation-menu
+
+- Bring back virtual keyboard and menu in math field in drawer! But fix them to be a little more explanatory.
+
+- Turn many areas where we have lists of parameters / edges into scrollable elements!
+
+- Multiple inputs / outputs on Michaelis Menten
+
+- Smart / Snap Deleting!
+    - When we delete a node, automatically re-infer the reaction type for any involved reactions.
+
+### TODO
+- [X] Right click to edit color / initial values
+- [X] Fix Michaelis-Menten adding duplicate parameters
+- [X] Add parameters with buttons.
+    - [X] Create new parameters
+    - [X] Associate Parameter to reaction when added to rate law
+
+- [X] Correctly update internal representation on node / edge deletion
+    - [X] Update on Edge Deletion
+    - [X] Update on Node Deletion
+        - [X] Update Rate Laws
+
+- [X] Multi-reactant arrows!
+    - [X] Show multiple inputs / outputs
+
+- [X] Banner on top
+    - [X] GitHub
+    - [X] "BioBuilder Light"
+
+- [X] Better tooltips everywhere!
+    - [X] Clean up "Customize Rate Law" (remove hamburger and keyboard buttons)
+    - [X] Clean up debug bubbles
+    - [X] Say "Coming Soon" to non-implemented reaction types
+
+- [X] Better Errors when things don't run!
+    - [X] Say what's wrong with the sim
+    - [X] Improve error logging on Python side
+
+- [ ] Make build passing
+
+- [ ] Make video tutorial
+    - [X] Little sign that says "Hey! Looks like you're new here. Please watch this 2min tutorial!"
+    - [X] Youtube thumbnail at top so anyone can re-watch the tutorial.
+
 
 # React + Vite + Hono + Cloudflare Workers
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/vite-react-template)
