@@ -400,7 +400,12 @@ I'll use this in the tooltips to help users address common mistakes!
 
 - Turn many areas where we have lists of parameters / edges into scrollable elements!
 
-- Multiple inputs / outputs on Michaelis Menten
+- Multiple inputs / outputs on Michaelis Menten (visualize arrows, not all are working)
+
+- Zoom in and out on graph!
+
+- BUG: Changing to mass action should change all catalysts to inputs!
+- BUG: Delete first reactant, have arrow from 3rd reactant to first, catalyze reaction, and now your product is acting as the reactant!! No good.
 
 - Smart / Snap Deleting!
     - When we delete a node, automatically re-infer the reaction type for any involved reactions.
@@ -436,6 +441,7 @@ I'll use this in the tooltips to help users address common mistakes!
 - [X] Make build passing
 
 - [ ] Make video tutorial
+    - Fun example of sin(glucose * 20) * 0.005 + glucose * 0.01
     - [X] Little sign that says "Hey! Looks like you're new here. Please watch this 2min tutorial!"
     - [X] Youtube thumbnail at top so anyone can re-watch the tutorial.
 

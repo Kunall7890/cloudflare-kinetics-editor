@@ -17,8 +17,9 @@ export function initializeMichaelisEdge(currRxn: reactions) {
     const currParticipants = currRxn.participants.map(p => p.id);
 
     const currentEnzymeID = useStore.getState().species.filter(s => currParticipants.includes(s.id) && s.speciesType === 'enzyme').map(s => s.id)[0] || '';
-    const currentSubstrID = useStore.getState().species.filter(s => currParticipants.includes(s.id) && s.speciesType === 'molecule').map(s => s.id)[0] || '';
-    
+    const currentSubstrID = currRxn.participants.filter(p => p.role === 'reactant').map(p => p.id)[0] || '';
+
+
 
     let kmID = '';
     let vmaxID = '';
