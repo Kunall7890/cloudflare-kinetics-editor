@@ -307,7 +307,7 @@ const useStore = create<AppState>((set, get) => ({
 
 
     // Handle connections which may not be to another node (when connecting from node to edge)
-    onConnectEnd: (event, connectionState) => {
+    onConnectEnd: (_event, connectionState) => {
       // connectionState has attributes: isValid, from, fromHandle, fromPosition, fromNode, to, toHandle, toPosition, toNode, pointer
 
       // When a connection is dropped on the pane it's not valid
@@ -459,7 +459,7 @@ const useStore = create<AppState>((set, get) => ({
           newEdge = { ...r, rate_type: newEdgeType, rate_law: newRateLaw };
 
         } else {
-          newEdge = initializeMichaelisEdge(id, r)
+          newEdge = initializeMichaelisEdge(r)
         }
 
         return newEdge;

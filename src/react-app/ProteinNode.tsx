@@ -226,7 +226,7 @@ export default function ProteinNode({ id, data, selected }: NodeProps<ProteinNod
 
 
 
-function TriangleWithBorder({sColor, bColor}) {
+function TriangleWithBorder({ sColor, bColor }: { sColor: string; bColor: string }) {
     return (
         <svg width="44" height="44" viewBox="0 0 44 44">
             <polygon

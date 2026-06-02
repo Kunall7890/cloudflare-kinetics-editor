@@ -1,8 +1,6 @@
 import { 
     animated, 
     useSpring, 
-    useTransition,
-    config,
 } from '@react-spring/web';
 
 // import {type AppNode } from './ProteinNode';

@@ -1,9 +1,5 @@
 import { 
-    BaseEdge, 
-    EdgeLabelRenderer,
-    getBezierPath,
     // useReactFlow, 
-    type Edge,
     type EdgeProps,
 } from '@xyflow/react';
 
@@ -11,25 +7,25 @@ import {
 // import ReversibleMassActionEdge from './edges/ReversibleMassAction';
 // import MassActionEdge from './edges/MassAction';
 
-import { MichaelisMentenEdge, ReversibleMassActionEdge, MassActionEdge } from './edges'
+import { 
+  MichaelisMentenEdge, 
+  ReversibleMassActionEdge, 
+  MassActionEdge,
+//   type MichaelisEdgeType,
+//   type RevMAEdgeType,
+//   type MAEdgeType,
+  type AppEdge,
+} from './edges'
 
 import './index.css';
-import useStore from './store';
-
-type RxnEdgeType = Edge<{ 
-    label: string; 
-    // toggleDrawer: (id: string) => void;
-    rate_law: string;
-    rate_type: string;
-}, 'reaction'>;
-
-export type AppEdge = RxnEdgeType;
 
 
 // ===================================================================================================================
 
 export default function RxnEdge({ 
     id, 
+    source,
+    target,
     sourceX, 
     sourceY, 
     targetX, 
@@ -39,12 +35,14 @@ export default function RxnEdge({
     selected,
     markerEnd,
     data,
-}: EdgeProps<RxnEdgeType>) {
+}: EdgeProps<AppEdge>) {
     
-    if (data.rate_type === 'mass_action') {
+    if (data?.rate_type === 'mass_action') {
         return (
         <MassActionEdge 
         id={id}
+        source={source}
+        target={target}
         sourceX={sourceX}
         sourceY={sourceY}
         targetX={targetX}
@@ -53,13 +51,15 @@ export default function RxnEdge({
         targetPosition={targetPosition}
         selected={selected}
         markerEnd={markerEnd}
-        data={data}
+        data={{...data, rate_type: 'mass_action' }}
         />
         );
-    } else if (data.rate_type === 'reversible_mass_action') {
+    } else if (data?.rate_type === 'reversible_mass_action') {
         return (
         <ReversibleMassActionEdge 
         id={id}
+        source={source}
+        target={target}
         sourceX={sourceX}
         sourceY={sourceY}
         targetX={targetX}
@@ -68,13 +68,15 @@ export default function RxnEdge({
         targetPosition={targetPosition}
         selected={selected}
         markerEnd={markerEnd}
-        data={data}
+        data={{...data, rate_type: 'reversible_mass_action' }}
         />
         );
-    } else if (data.rate_type === 'michaelis_menten') { 
+    } else if (data?.rate_type === 'michaelis_menten') { 
         return (
         <MichaelisMentenEdge
         id={id}
+        source={source}
+        target={target}
         sourceX={sourceX}
         sourceY={sourceY}
         targetX={targetX}
@@ -83,7 +85,7 @@ export default function RxnEdge({
         targetPosition={targetPosition}
         selected={selected}
         markerEnd={markerEnd}
-        data={data}
+        data={{...data, rate_type: 'michaelis_menten', enzymeID: '' }}
         />
         );
         
@@ -92,6 +94,8 @@ export default function RxnEdge({
         return (
         <MassActionEdge 
         id={id}
+        source={source}
+        target={target}
         sourceX={sourceX}
         sourceY={sourceY}
         targetX={targetX}

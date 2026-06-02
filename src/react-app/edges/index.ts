@@ -13,7 +13,7 @@ import MichaelisMentenEdge, {type MichaelisEdgeType} from "./MichaelisMenten"
 export { default as MichaelisMentenEdge } from "./MichaelisMenten";
 export type { MichaelisEdgeType } from "./MichaelisMenten";
 export { MichaelisMentenDrawerInfo } from "./MichaelisMenten";
-export { initializeMichaelisEdge } from "./MichaelisMenten";
+export { initializeMichaelisEdge } from "./Functions"; // Has to be in a separate file for "fast refresh"
 
 import CustomEdge, {type CustomEdgeType} from "./Custom";
 export { default as CustomEdge } from "./Custom";
