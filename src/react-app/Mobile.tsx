@@ -33,6 +33,11 @@ export default function MobileOverlay() {
     
         {/* <Banner /> */}
         {/* <Notice /> */}
+
+        <div className="MobileSection">
+            <div className="MobileTitle">BIOBUILDER</div>
+            <div className="MobileSubtitle">LIGHT</div>
+        </div>
     
 
         <div className="MobileSection">
@@ -52,7 +57,7 @@ export default function MobileOverlay() {
             </video>
         </div>
 
-        <div className="MobileSection" style={{flexDirection: 'row', justifyContent: 'right', width: '100%'}} >
+        <div className="MobileSection" style={{display: 'flex', flexDirection: 'row', justifyContent: 'right', width: '100%'}} >
             <button className="MobileActionButton" onClick={() => navigator.clipboard.writeText('https://biobuilder.app')} >Copy to Clipboard</button>
             <button className="MobileActionButton" onClick={handleShare} >Share Link</button>
         </div>
