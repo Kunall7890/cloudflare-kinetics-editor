@@ -11,6 +11,7 @@ import './index.css';
 import './radix.css';
 import './styles/Banner.css';
 
+
 import { Toast, Tooltip } from "radix-ui";
 import { GitHubLogoIcon, DiscordLogoIcon, VideoIcon, ChevronRightIcon, Cross1Icon } from "@radix-ui/react-icons";
 
@@ -31,6 +32,7 @@ import ProteinNode, { type AppNode } from './ProteinNode';
 import RxnDrawer from './Drawer';
 import SimulationDrawer from './SimulationDrawer';
 import FeedbackDrawer from './FeedbackDrawer';
+import MobileOverlay from './Mobile';
 
 import { 
   edgeTypes,
@@ -168,6 +170,7 @@ export default function App() {
 
   // For handling dark mode
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const mobile = true;
 
   return (
     <div style={{ width: '100vw', height: '100vh' }} className="app">
@@ -252,6 +255,7 @@ export default function App() {
         <RxnDrawer />
         <SimulationDrawer />
         
+        {mobile && <MobileOverlay />}
       
     </div>
   );
@@ -468,3 +472,5 @@ function TutorialPopup() {
   );
 
 }
+
+
