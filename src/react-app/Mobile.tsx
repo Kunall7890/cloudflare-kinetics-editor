@@ -4,15 +4,15 @@ import './styles/Banner.css';
 import './styles/Mobile.css';
 
 
-import {
-     TooltipRoot, 
-     TooltipContent, 
-     TooltipTrigger 
-} from './Tooltips'
-import { Tooltip } from "radix-ui";
+// import {
+//      TooltipRoot, 
+//      TooltipContent, 
+//      TooltipTrigger 
+// } from './Tooltips'
+// import { Tooltip } from "radix-ui";
 
-import { GitHubLogoIcon, DiscordLogoIcon, VideoIcon } from "@radix-ui/react-icons";
-import useThemeStore from './ThemeStore';
+// import { GitHubLogoIcon, DiscordLogoIcon, VideoIcon } from "@radix-ui/react-icons";
+// import useThemeStore from './ThemeStore';
 
 
 
@@ -72,48 +72,48 @@ export default function MobileOverlay() {
 
 
 
-function Banner() {
+// function Banner() {
 
-  // REMINDER: Cute color palette: #f00, #0ff, #0077b6. Not required to use, but helpful if wanting to come back later lol.
-  const tutorialPhase = useThemeStore((state) => state.tutorialPhase);
-  const setTutorialPhase = useThemeStore((state) => state.setTutorialPhase);
+//   // REMINDER: Cute color palette: #f00, #0ff, #0077b6. Not required to use, but helpful if wanting to come back later lol.
+//   const tutorialPhase = useThemeStore((state) => state.tutorialPhase);
+//   const setTutorialPhase = useThemeStore((state) => state.setTutorialPhase);
 
-  return (
-  <div className="Banner">
+//   return (
+//   <div className="Banner">
 
-    {/* Title */}
-    <div className="BannerSection" >
-          <div className="BannerTitle">BIOBUILDER</div> 
-          <div className="BannerSubtitle">LIGHT</div>
-    </div>
+//     {/* Title */}
+//     <div className="BannerSection" >
+//           <div className="BannerTitle">BIOBUILDER</div> 
+//           <div className="BannerSubtitle">LIGHT</div>
+//     </div>
 
-    {/* Calls to action */}
-    <div className="BannerSection" style={{justifyContent: 'center', alignItems: 'center'}}>
-      <GitHubLogoIcon className="BannerLogo" onClick={() => window.open('https://github.com/MarkAStevens04/cloudflare-kinetics-editor', '_blank')} />
+//     {/* Calls to action */}
+//     <div className="BannerSection" style={{justifyContent: 'center', alignItems: 'center'}}>
+//       <GitHubLogoIcon className="BannerLogo" onClick={() => window.open('https://github.com/MarkAStevens04/cloudflare-kinetics-editor', '_blank')} />
                 
-      <DiscordLogoIcon className="BannerLogo" onClick={() => window.open('https://discord.gg/GmsKryYDGN', '_blank')} />
+//       <DiscordLogoIcon className="BannerLogo" onClick={() => window.open('https://discord.gg/GmsKryYDGN', '_blank')} />
 
-      <TooltipRoot open={tutorialPhase === 1} onOpenChange={() => setTutorialPhase(2)}>
-      {/* <TooltipRoot defaultOpen={tutorialPhase === 1} > */}
-        <TooltipTrigger>
-        <VideoIcon className="BannerLogo" onClick={() => window.open('https://youtu.be/Lmgdc56ldk8', '_blank')} />
-      </TooltipTrigger>
+//       <TooltipRoot open={tutorialPhase === 1} onOpenChange={() => setTutorialPhase(2)}>
+//       {/* <TooltipRoot defaultOpen={tutorialPhase === 1} > */}
+//         <TooltipTrigger>
+//         <VideoIcon className="BannerLogo" onClick={() => window.open('https://youtu.be/Lmgdc56ldk8', '_blank')} />
+//       </TooltipTrigger>
 
-      <TooltipContent side="bottom" sideOffset={10}>
-        Re-watch the walkthrough video here!
-        <Tooltip.Arrow className="TooltipArrow" />
-      </TooltipContent>
-      </TooltipRoot>
+//       <TooltipContent side="bottom" sideOffset={10}>
+//         Re-watch the walkthrough video here!
+//         <Tooltip.Arrow className="TooltipArrow" />
+//       </TooltipContent>
+//       </TooltipRoot>
 
-    </div>
+//     </div>
 
 
-    {/* Last section */}
-    <div className="BannerSection" />
+//     {/* Last section */}
+//     <div className="BannerSection" />
   
-  </div>
-  );
-}
+//   </div>
+//   );
+// }
 
 // Little banner at top that's giving a notice to the user
 // function Notice() {
