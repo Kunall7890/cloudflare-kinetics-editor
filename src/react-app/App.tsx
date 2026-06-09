@@ -174,6 +174,8 @@ export default function App() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return (
+  <>
+    {isMobile ? <MobileOverlay /> : 
     <div style={{ width: '100vw', height: '100vh' }} className="app">
         <>
         <ReactFlow<AppNode, AppEdge>
@@ -256,9 +258,9 @@ export default function App() {
         <RxnDrawer />
         <SimulationDrawer />
         
-        {isMobile && <MobileOverlay />}
       
-    </div>
+    </div>}
+  </>
   );
 }
 
