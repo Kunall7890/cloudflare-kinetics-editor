@@ -6,6 +6,8 @@
 [![N|Solid](https://img.shields.io/website?url=https%3A%2F%2Fkinetics-editor.vercel.app%2Fapi%2Fhealth&label=backend&cacheSeconds=600)](https://kinetics-editor.vercel.app/api/health)
 ![N|Solid](https://img.shields.io/github/check-runs/MarkAStevens04/cloudflare-kinetics-editor/main?label=build)
 [![N|Solid](https://img.shields.io/badge/github-backend-blue?logo=github)](https://github.com/MarkAStevens04/Kinetics-Editor)
+![GitHub last commit](https://img.shields.io/github/last-commit/MarkAStevens04/cloudflare-kinetics-editor)
+
 
 
 [![N|Solid](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/GmsKryYDGN) 
