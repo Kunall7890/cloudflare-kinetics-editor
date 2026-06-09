@@ -19,7 +19,7 @@
 
 # Basic Overview
 
-BioBuilder is a web-based biochemical kinetics editor and simulator! 🧪✨ Built specifically to run simulations easily and quickly. 
+BioBuilder is a web-based biochemical kinetics editor and simulator! 🧪✨ Built specifically to run simulations quickly and easily. 
 
 # Philosophy
 
@@ -29,9 +29,7 @@ We believe that biochemists shouldn't need to be computer scientists to benefit 
 
 **There are two repos**: The frontend (this repo) to interface with scientists, and the backend ([HERE](https://github.com/MarkAStevens04/Kinetics-Editor)) to run our simulations.
 
-This app was originally built for PHY426.
-
-Go to https://biobuilder.app to start using the software now!
+Go to [BioBuilder.app](https://biobuilder.app?utm_source=github&utm_medium=readme&utm_campaign=docs) to start using the software now!
 
 
 # Contributing
