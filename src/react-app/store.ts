@@ -30,6 +30,9 @@ import {
 } from './edges'
 
 
+// Want to see if width is greater than value AND "real-pointer"
+const DESKTOP_QUERY = "(pointer: fine)";
+
 type species = {
   id: string;
   label: string;
@@ -178,6 +181,7 @@ type AppState = {
   focusEdge: (edgeID: string) => void; // Focuses on a given edge!
   focusNode: (nodeID: string) => void; // Focuses on a given node!
 
+  isDesktop: boolean;
 
 };
 
@@ -762,8 +766,9 @@ const useStore = create<AppState>((set, get) => ({
       get().setRxnDrawerOpen(false);
       get().onNodesChange([{ id: nodeID, type: 'select', selected: true }]); // Select the node in the visualizer
       get().setFocusedTarget({id: nodeID, type: 'node'});
-    }
+    },
 
+    isDesktop: window.matchMedia(DESKTOP_QUERY).matches,
 }));
 
 
@@ -911,3 +916,9 @@ function getDefaultRateLaw(reaction: reactions) {
 function numberToLetters(num: number) {
     return String(num).split('').map((digit) => String.fromCharCode(97 + Number(digit))).join('');
 }
+
+// Global listener to watch state. Sets up at import time, not inside a component.
+const mql = window.matchMedia(DESKTOP_QUERY);
+mql.addEventListener('change', (e) => {
+  useStore.setState({ isDesktop: e.matches });
+});

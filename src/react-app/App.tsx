@@ -170,7 +170,7 @@ export default function App() {
 
   // For handling dark mode
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const mobile = true;
+  const isDesktop = useStore((state) => state.isDesktop);
 
   return (
     <div style={{ width: '100vw', height: '100vh' }} className="app">
@@ -255,7 +255,7 @@ export default function App() {
         <RxnDrawer />
         <SimulationDrawer />
         
-        {mobile && <MobileOverlay />}
+        {!isDesktop && <MobileOverlay />}
       
     </div>
   );
@@ -472,5 +472,3 @@ function TutorialPopup() {
   );
 
 }
-
-
