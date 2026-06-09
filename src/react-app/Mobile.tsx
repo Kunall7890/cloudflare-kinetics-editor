@@ -122,7 +122,7 @@ export default function MobileOverlay() {
 function Notice() {
     return (
         <>
-        <div className="Notice">
+        <div className="Notice pulsing">
             <div className="NoticeText">BioBuilder is built for the desktop canvas.</div> 
             {/* <br />  */}
             <div className="NoticeText-2">Please continue on Desktop.</div>

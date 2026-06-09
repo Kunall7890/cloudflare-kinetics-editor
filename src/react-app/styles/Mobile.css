@@ -17,72 +17,33 @@
     overflow-x: hidden;
 }
 
-/* .MobileContent {
-} */
-
-.Notice {
-    /* position: fixed;
-    top: 0;
-    left: 0; */
-    width: 100%;
-
-    background-color: #747bff;
-    color: #fff;
-
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 10px;
-
-}
-
-.NoticeText {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    /* width: 100%; */
-    /* background-color: rgba(255, 0, 0, 0.5); */
-    line-height: 1.3;
-}
-
-.NoticeText-2 {
-    font-size: 18px;
-    font-weight: 400;
-    text-align: center;
-    /* width: 100%; */
-    /* background-color: rgba(255, 0, 0, 0.5); */
-    line-height: 1.3;
-}
-
-.MobileVideoContainer {
-    border: 0px transparent solid;
-	border-color: rgba(0, 0, 0, 0.2);
-	border-radius: 16px;
-    z-index: 1;
-    overflow: hidden;
-
-    aspect-ratio: 1 / 0.49;
-    margin: 16px 16px;
-    /* padding: 8px 0px; */
-    /* padding: 0px 32px 0px 32px; */
-    /* height: 240px; */
-    position: relative;
-
-    background-color: #fff;
-
-    /* justify-content: center; */
-    /* align-items: center; */
-
-    /* padding: 0px; */
-    /* margin: 0px; */
-}
 
 .MobileSection {
     width: 100%;
     padding: 0px 16px;
 }
+
+
+.MobileTitle {
+    font-size: 48px;
+	font-weight: 900;
+	font-family: Helios_Extended;
+    line-height: 0.9;
+
+	padding: 16px 16px 0px 16px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.MobileSubtitle {
+    font-size: 48px;
+	font-weight: 100;
+    line-height: 0.9;
+
+	padding: 0px 16px 32px 16px;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+
 
 .BulletSection {
     font-size: 14px;
@@ -124,19 +85,30 @@ p {
     margin: 0px 0px 0px 0px;
 }
 
-/* .MobileActionButton {
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    background-color: rgba(255, 0, 0, 1);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 
-    margin: 0px 16px 0px 0px;
-} */
+.MobileVideoContainer {
+    border: 0px transparent solid;
+	border-color: rgba(0, 0, 0, 0.2);
+	border-radius: 16px;
+    z-index: 1;
+    overflow: hidden;
+
+    aspect-ratio: 1 / 0.49;
+    margin: 16px 16px;
+    /* padding: 8px 0px; */
+    /* padding: 0px 32px 0px 32px; */
+    /* height: 240px; */
+    position: relative;
+
+    background-color: #fff;
+
+    /* justify-content: center; */
+    /* align-items: center; */
+
+    /* padding: 0px; */
+    /* margin: 0px; */
+}
+
 
 .MobileActionButton {
     padding: 16px;
@@ -152,22 +124,54 @@ p {
     margin: 0px 16px 0px 0px;
 }
 
-.MobileTitle {
-    font-size: 48px;
-	font-weight: 900;
-	font-family: Helios_Extended;
-    line-height: 0.9;
 
-	padding: 32px 16px 0px 16px;
-    color: rgba(0, 0, 0, 1);
+.Notice {
+    /* position: fixed;
+    top: 0;
+    left: 0; */
+    width: 100%;
+
+    background-color: #747bff;
+    color: #fff;
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 10px;
+
 }
 
-.MobileSubtitle {
-    font-size: 48px;
-	font-weight: 100;
-    line-height: 0.9;
+.NoticeText {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    /* width: 100%; */
+    /* background-color: rgba(255, 0, 0, 0.5); */
+    line-height: 1.3;
+}
 
-	padding: 16px 16px 32px 16px;
-    color: rgba(0, 0, 0, 0.3);
-    
+.NoticeText-2 {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    /* width: 100%; */
+    /* background-color: rgba(255, 0, 0, 0.5); */
+    line-height: 1.3;
+}
+
+@keyframes pulse-bg {
+    0%, 100% {background-color: #8b5cf6;}
+    50% {background-color: #3b82f6;}
+}
+
+
+/* .pulsing {
+    animation: pulse-bg 2s ease-in-out infinite;
+} */
+
+.pulsing {
+    background-image: linear-gradient(to right,
+  #ffbe0b, #fb5607, #ff006e, #8338ec, #3a86ff);
 }
