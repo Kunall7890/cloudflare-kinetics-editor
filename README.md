@@ -27,7 +27,7 @@ BioBuilder is a web-based biochemical kinetics editor and simulator! 🧪✨ Bui
 
 Biochemical kinetics allows you to predict the future in biology. 🔮 It allows you to know exactly which chemicals and how much will be produced, given some set of initial conditions.
 
-We believe that biochemists shouldn't need to be computer scientists to benefit from this technique. BioBuilder bridges the gap between biologists and computers, and allows you to start running simulations NOW! To understand what our project is trying to achieve, see [VISION.md](VISION.md)
+We believe that biochemists shouldn't need to be computer scientists to benefit from this technique. BioBuilder bridges the gap between biologists and computers, and allows you to start running simulations NOW! To understand what our project is trying to achieve, see [VISION.md](VISION.md).
 
 **There are two repos**: The frontend (this repo) to interface with scientists, and the backend ([HERE](https://github.com/MarkAStevens04/Kinetics-Editor)) to run our simulations.
 
@@ -38,7 +38,7 @@ Go to [BioBuilder.app](https://biobuilder.app?utm_source=github&utm_medium=readm
 
 Want to see a new feature on the site? Is there a small tweak that would make the site less frustrating? The best person to make the change is *YOU*! You don't need to be an expert computer scientist to make a meaningful impact. Whether you're a seasoned open-source veteran, or this is your first contribution, we always welcome any help we can get, and we've created a guide to help make it easy for you to get started.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for a guide on how to get started making your first contributions.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for a guide on how to get started making your first contributions. For a general view of what we're trying to achieve, see [VISION.md](VISION.md). For actionable steps on what needs to be done, view [ROADMAP.md](ROADMAP.md) or at our pull requests!
 
 # How to use
 

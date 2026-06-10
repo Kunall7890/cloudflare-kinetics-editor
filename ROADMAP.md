@@ -58,7 +58,7 @@ A user can:
 - **Accounts & auth** - sign-up, sign-in, session management.
 - **Projects & cloud persistence** - a project model and storage so work survives across sessions and devices.
 - **Sharing & permissions** - share a project with a collaborator; view vs. edit access.
-- **History / undo–redo** - a reliable action history within the editor.
+- **History / undo–redo** - a reliable action history within the editor. Should come for free with project model.
 - **Workspace UX** - browsing, organizing, and searching across multiple projects.
 
 > Phase 2 is also where **compute credits** are introduced (see *Sustainability* in the [VISION](VISION.md)). The free tier stays generous; credits cover heavier use, and contributing data earns them.
