@@ -17,7 +17,7 @@ import {
 //   type RevMAEdgeType,
 //   type MAEdgeType,
   type AppEdge,
-} from './tempedges'
+} from './edges'
 
 import './index.css';
 

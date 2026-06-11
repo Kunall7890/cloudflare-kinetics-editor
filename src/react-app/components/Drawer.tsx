@@ -35,7 +35,7 @@ import {
   MassActionDrawerInfo,
   ReversibleMassActionDrawerInfo,
   CustomDrawerInfo,
-} from './tempedges'
+} from './edges'
 
 import {
      TooltipRoot, 
