@@ -175,6 +175,7 @@ export default function App() {
 
   // For handling dark mode
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const tutorialPhase = useThemeStore((state) => state.tutorialPhase);
 
   return (
   <>
@@ -259,7 +260,7 @@ export default function App() {
         <TutorialPopup />
 
         <RxnDrawer />
-        <SimulationDrawer />
+        {tutorialPhase !== 0 && <SimulationDrawer />}
         
       
     </div>}
