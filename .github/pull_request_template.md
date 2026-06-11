@@ -38,7 +38,7 @@ Thank you SO MUCH for sharing your feedback with us!! Your suggestion helped gui
 
 > YOUR MESSAGE HERE
 
-If there's something still missing, let us know HERE, and we'll get right on it!
+If there's something still missing, let us know [HERE](https://tally.so/r/VLYDpa), and we'll get right on it!
 
 ## 📜 BioBuilder Contributor License Agreement
 
