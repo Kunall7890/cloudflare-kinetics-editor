@@ -31,24 +31,24 @@ FullStory('trackEvent', {
 })
 
 // Initialize Protein and Reaction types
-import ProteinNode, { type AppNode } from './components/ProteinNode';
-import RxnDrawer from './components/Drawer';
-import SimulationDrawer from './components/SimulationDrawer';
-import FeedbackDrawer from './components/FeedbackDrawer';
-import MobileOverlay from './components/MobileOverlay';
+import ProteinNode, { type AppNode } from './tempcomponents/ProteinNode';
+import RxnDrawer from './tempcomponents/Drawer';
+import SimulationDrawer from './tempcomponents/SimulationDrawer';
+import FeedbackDrawer from './tempcomponents/FeedbackDrawer';
+import MobileOverlay from './tempcomponents/MobileOverlay';
 
 import { isMobile } from 'react-device-detect';
 
 import { 
   edgeTypes,
   type AppEdge,
-} from './components/edges'
+} from './tempcomponents/tempedges'
 
 import {
      TooltipRoot, 
      TooltipContent, 
      TooltipTrigger 
-} from './components/Tooltips'
+} from './tempcomponents/Tooltips'
 
 // Stringify TODO: Move this to Drawer instead
 // import { convertLatexToAsciiMath } from "mathlive";
